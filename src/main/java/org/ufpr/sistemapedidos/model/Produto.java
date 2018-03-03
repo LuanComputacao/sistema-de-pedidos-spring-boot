@@ -1,7 +1,6 @@
 package org.ufpr.sistemapedidos.model;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
