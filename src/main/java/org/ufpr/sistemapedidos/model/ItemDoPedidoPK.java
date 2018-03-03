@@ -1,9 +1,8 @@
 package org.ufpr.sistemapedidos.model;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 
 /**
@@ -12,12 +11,10 @@ import javax.persistence.*;
 @Embeddable
 public class ItemDoPedidoPK {
     @Basic(optional = false)
-    @NotBlank
     @Column(name = "id_pedido")
     private int idPedido;
 
     @Basic(optional = false)
-    @NotBlank
     @Column(name = "id_produto")
     private int idProduto;
 

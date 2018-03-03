@@ -38,7 +38,6 @@ public class ProdutoController {
     public ResponseEntity<Produto> createProduto(@Valid @RequestBody Produto produto) {
         try {
             List<Produto> produtos = null;
-            Pageable oneOf = new PageRequest(0, 1);
             produtos = produtoRepository.findTop1ByDescription(produto.getDescricao());
             System.out.println(produto);
             if (!produtos.isEmpty())
