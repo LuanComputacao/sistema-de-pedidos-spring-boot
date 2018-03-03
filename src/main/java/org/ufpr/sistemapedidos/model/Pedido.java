@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by luancomputacao on 24/02/18.
@@ -14,8 +15,12 @@ import java.util.Date;
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PedidoPK pedidoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id", length = 11)
+    private Integer id;
+
 
     @Column(name = "data_pedido")
     @Temporal(TemporalType.DATE)
@@ -28,12 +33,12 @@ public class Pedido implements Serializable {
     @ManyToOne(optional = false)
     private Cliente cliente;
 
-    public PedidoPK getPedidoPK() {
-        return pedidoPK;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPedidoPK(PedidoPK pedidoPK) {
-        this.pedidoPK = pedidoPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Date getDataPedido() {
@@ -60,25 +65,19 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Pedido)) return false;
         Pedido pedido = (Pedido) o;
-
-        if (!getPedidoPK().equals(pedido.getPedidoPK())) return false;
-        if (getDataPedido() != null ? !getDataPedido().equals(pedido.getDataPedido()) : pedido.getDataPedido() != null)
-            return false;
-        return getCliente().equals(pedido.getCliente());
+        return Objects.equals(getId(), pedido.getId()) &&
+                Objects.equals(getDataPedido(), pedido.getDataPedido()) &&
+                Objects.equals(getCliente(), pedido.getCliente());
     }
 
     @Override
     public int hashCode() {
-        int result = getPedidoPK().hashCode();
-        result = 31 * result + (getDataPedido() != null ? getDataPedido().hashCode() : 0);
-        result = 31 * result + getCliente().hashCode();
-        return result;
+
+        return Objects.hash(getId(), getDataPedido(), getCliente());
     }
 }
