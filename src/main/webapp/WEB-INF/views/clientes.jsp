@@ -4,6 +4,9 @@
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
 
 <tp:base>
+
+    <jsp:attribute name="navbar">clientes</jsp:attribute>
+
     <jsp:attribute name="title">
         Sistema de Pedidos
     </jsp:attribute>

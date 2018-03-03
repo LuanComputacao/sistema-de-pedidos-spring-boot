@@ -20,7 +20,7 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", length = 11)
     private Integer id;
 
     @Length(max = 11)

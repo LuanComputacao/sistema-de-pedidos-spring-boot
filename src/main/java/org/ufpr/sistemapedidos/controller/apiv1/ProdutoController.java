@@ -2,6 +2,8 @@ package org.ufpr.sistemapedidos.controller.apiv1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +37,12 @@ public class ProdutoController {
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Produto> createProduto(@Valid @RequestBody Produto produto) {
         try {
-            Produto produto1 = null;
-            produto1 = produtoRepository.findOne(produto.getId());
-            if (produto.getId() != null)
-                return new ResponseEntity<>(produtoRepository.save(produto), OK);
+            List<Produto> produtos = null;
+            Pageable oneOf = new PageRequest(0, 1);
+            produtos = produtoRepository.findTop1ByDescription(produto.getDescricao());
+            System.out.println(produto);
+            if (!produtos.isEmpty())
+                return new ResponseEntity<>(produtoRepository.save(produtos.get(0)), OK);
             return new ResponseEntity<>(produtoRepository.save(produto), CREATED);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Produto) null, CONFLICT);

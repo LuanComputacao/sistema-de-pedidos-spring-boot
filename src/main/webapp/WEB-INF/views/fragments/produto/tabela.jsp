@@ -8,6 +8,7 @@
     <jsp:attribute name="header">
         <th scope="col">#</th>
         <th scope="col">Descrição</th>
+        <th scope="col">  </th>
     </jsp:attribute>
 
     <jsp:attribute name="content">
