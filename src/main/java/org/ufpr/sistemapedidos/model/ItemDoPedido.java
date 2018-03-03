@@ -24,10 +24,7 @@ public class ItemDoPedido implements Serializable {
     private String qtdade;
 
 
-    @JoinColumns({
-            @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false),
-            @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false),
-    })
+    @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Pedido pedido;
 
