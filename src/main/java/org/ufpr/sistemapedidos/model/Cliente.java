@@ -1,6 +1,7 @@
 package org.ufpr.sistemapedidos.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -36,6 +37,7 @@ public class Cliente implements Serializable {
     private String sobrenome;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    @JsonBackReference
     private Collection<Pedido> pedidoCollection;
 
     public Integer getId() {
