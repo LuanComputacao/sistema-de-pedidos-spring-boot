@@ -16,10 +16,10 @@ public class ItemDoPedidoPK {
     @Column(name = "id_pedido")
     private int idPedido;
 
-//    @Basic(optional = false)
-//    @NotBlank
-//    @Column(name = "id_produto")
-//    private int idProduto;
+    @Basic(optional = false)
+    @NotBlank
+    @Column(name = "id_produto")
+    private int idProduto;
 
     public int getIdPedido() {
         return idPedido;
@@ -29,11 +29,11 @@ public class ItemDoPedidoPK {
         this.idPedido = idPedido;
     }
 
-//    public int getIdProduto() {
-//        return idProduto;
-//    }
-//
-//    public void setIdProduto(int idProduto) {
-//        this.idProduto = idProduto;
-//    }
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
 }
