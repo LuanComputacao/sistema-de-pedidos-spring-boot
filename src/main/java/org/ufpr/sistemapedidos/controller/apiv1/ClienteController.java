@@ -46,7 +46,7 @@ public class ClienteController {
         try {
             Cliente cliente1 = null;
             cliente1 = clienteRepository.findOne(cliente.getId());
-            if (cliente1.getId() != null)
+            if (cliente1 != null)
                 return new ResponseEntity<>(clienteRepository.save(cliente), OK);
             return new ResponseEntity<>(clienteRepository.save(cliente), CREATED);
         } catch (DataIntegrityViolationException e) {
