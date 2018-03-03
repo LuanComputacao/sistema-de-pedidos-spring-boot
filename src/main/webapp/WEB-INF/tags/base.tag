@@ -33,7 +33,7 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 navbar-top">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<c:url value="/"/>">
         <jsp:invoke fragment="title"/>
     </a>
     <div class="col-md-10 navbar-top__title">
@@ -47,13 +47,13 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link js-clientes" href="/clientes"><span data-feather="users"></span>Clientes</a>
+                        <a class="nav-link js-clientes" href="<c:url value="/clientes"/>"><span data-feather="users"></span>Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-produtos" href="/produtos"><span data-feather="shopping-bag"></span>Produtos</a>
+                        <a class="nav-link js-produtos" href="<c:url value="/produtos"/>"><span data-feather="shopping-bag"></span>Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-pedidos" href="/pedidos"><span data-feather="list"></span>Pedidos</a>
+                        <a class="nav-link js-pedidos" href="<c:url value="/pedidos"/>"><span data-feather="list"></span>Pedidos</a>
                     </li>
                 </ul>
             </div>

@@ -17,9 +17,4 @@ public class Crud {
     public ModelAndView index() {
         return new ModelAndView("index");
     }
-
-    @GetMapping("/itens-do-pedido")
-    public ModelAndView itensDoPedido() {
-        return new ModelAndView("itens-do-pedido");
-    }
 }
