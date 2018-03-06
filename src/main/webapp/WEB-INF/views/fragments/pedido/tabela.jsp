@@ -7,7 +7,8 @@
 <tp:table_dark>
     <jsp:attribute name="header">
         <th scope="col">#</th>
-        <th scope="col">Descrição</th>
+        <th scope="col">Data</th>
+        <th scope="col">Cliente</th>
         <th scope="col"></th>
     </jsp:attribute>
 
@@ -19,6 +20,18 @@
                         <th scope="row">${pedidos[index].id}</th>
                         <td>${pedidos[index].dataPedido}</td>
                         <td>
+                            <c:choose>
+                                <c:when test="${pedidos[index].cliente != null}">
+                                    [${pedidos[index].cliente.cpf}] - ${pedidos[index].cliente.nome} ${pedidos[index].cliente.sobrenome}
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+
+
+                        <td class="text-center">
                             <a href="/pedido/${pedidos[index].id}"><span data-feather="trash-2"></span></a>
                             <a href="/pedido/${pedidos[index].id}"><span data-feather="edit"></span></a>
                         </td>

@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col">
-        <table class="table table-dark">
+        <table class="table table-dark table-bordered">
             <thead class="theaad-dark text-center table-striped">
             <tr>
                 <jsp:invoke fragment="header"/>

@@ -1,6 +1,7 @@
 package org.ufpr.sistemapedidos.controller.apiv1.wrapper;
 
-import javax.persistence.Column;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PedidoWrapper {
@@ -20,8 +21,9 @@ public class PedidoWrapper {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
-        this.dataPedido = dataPedido;
+    public void setDataPedido(String dataPedido) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dataPedido = sdf.parse(dataPedido);
     }
 
     public Integer getClienteID() {

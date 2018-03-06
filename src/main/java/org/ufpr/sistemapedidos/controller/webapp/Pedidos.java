@@ -25,17 +25,12 @@ public class Pedidos {
     @GetMapping("/pedidos")
     public ModelAndView pedidos() {
         ModelAndView mv = new ModelAndView(view);
-        mv.addObject("listar", true);
-        List<Pedido> pedidos = pedidoRepository.findAll();
-        System.out.println("------------------DEBUG------------------");
-        System.out.println(pedidos.get(0));
-        System.out.println("------------------------------------");
-        for (Pedido pedido : pedidos) {
-            System.out.println(pedido);
-        }
-        System.out.println("------------------------------------");
 
+        mv.addObject("listar", true);
+
+        List<Pedido> pedidos = pedidoRepository.findAll();
         mv.addObject("pedidos", pedidos);
+
         return mv;
     }
 
@@ -45,6 +40,7 @@ public class Pedidos {
         mv.addObject("criar", true);
         mv.addObject("clientes", clienteRepository.findAll());
         return mv;
+
     }
 
     @GetMapping("/pedido/{id}")
@@ -52,6 +48,7 @@ public class Pedidos {
         ModelAndView mv = new ModelAndView(view);
         mv.addObject("editar", true);
         mv.addObject("pedido", pedidoRepository.findOne(pedidoID));
+        mv.addObject("clientes", clienteRepository.findAll());
         return mv;
     }
 }

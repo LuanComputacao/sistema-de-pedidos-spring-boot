@@ -54,9 +54,11 @@ public class PedidoController {
     public ResponseEntity<Pedido> createPedido(@Valid @RequestBody PedidoWrapper pedidoWrapper) {
         try {
             Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+
             if (pedido != null) {
                 return new ResponseEntity<>(pedidoRepository.save(pedido), OK);
             }
+
             pedido = new Pedido();
             Cliente cliente;
             cliente = clienteRepository.findOne(pedidoWrapper.getClienteID());
