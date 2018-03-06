@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,26 +8,26 @@
     <jsp:attribute name="header">
         <th scope="col">#</th>
         <th scope="col">Descrição</th>
-        <th scope="col">  </th>
+        <th scope="col"></th>
     </jsp:attribute>
 
     <jsp:attribute name="content">
         <c:choose>
-            <c:when test="${func:length(produtos) gt 0}">
-                <c:forEach var="produto" items="${produtos}">
+            <c:when test="${func:length(pedidos) gt 0}">
+                <c:forEach var="index" begin="0" end="${func:length(pedidos) - 1 }">
                     <tr>
-                        <th scope="row">${produto.id}</th>
-                        <td><c:if test="${func:length(produto.descricao) < 1}"> - </c:if>${produto.descricao}</td>
+                        <th scope="row">${pedidos[index].id}</th>
+                        <td>${pedidos[index].dataPedido}</td>
                         <td>
-                            <a href="/produto/${produto.id}"><span data-feather="trash-2"></span></a>
-                            <a href="/produto/${produto.id}"><span data-feather="edit"></span></a>
+                            <a href="/pedido/${pedidos[index].id}"><span data-feather="trash-2"></span></a>
+                            <a href="/pedido/${pedidos[index].id}"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <th scope="row"> -</th>
-                <td> - </td>
+                <th scope="row"> - #</th>
+                <td> -</td>
             </c:otherwise>
         </c:choose>
     </jsp:attribute>

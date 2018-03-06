@@ -9,8 +9,18 @@
                    <c:if test="${editar}">data-value="${pedido.id}"</c:if>>
 
             <div class="form-group">
-                <label for="pedido-descricao" class="sr-only">Descrição:</label>
-                <input class="form-control" type="text" name="descricao" id="pedido-descricao" placeholder="Descrição"
+                <label for="pedido-cliente" class="sr-only">Cliente</label>
+                <select class="form-control" name="pedido-cliente" id="pedido-cliente">
+                    <option> Selecione um Cliente</option>
+                    <c:forEach var="cliente" items="${clientes}">
+                        <option value="${cliente.id}">${cliente.cpf}: ${cliente.nome} ${cliente.sobrenome}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pedido-data" class="sr-only">Data do Pedido:</label>
+                <input class="form-control" type="date" name="dataPedido" id="pedido-data" placeholder="Descrição"
                        <c:if test="${editar}">data-value="${pedido.descricao}"</c:if>>
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>

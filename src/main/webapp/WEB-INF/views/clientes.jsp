@@ -32,7 +32,7 @@
         </c:if>
 
 
-        <c:if test="${listar != null}">
+        <c:if test="${listar}">
             <jsp:include page="fragments/cliente/tabela.jsp"/>
         </c:if>
 

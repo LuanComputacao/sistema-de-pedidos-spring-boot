@@ -21,7 +21,6 @@ public class Pedido implements Serializable {
     @Column(name = "id", length = 11)
     private Integer id;
 
-
     @Column(name = "data_pedido")
     @Temporal(TemporalType.DATE)
     private Date dataPedido;
@@ -29,8 +28,8 @@ public class Pedido implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Collection<ItemDoPedido> itemDoPedidoCollection;
 
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id", updatable = false)
+    @ManyToOne
     private Cliente cliente;
 
     public Integer getId() {
@@ -79,5 +78,15 @@ public class Pedido implements Serializable {
     public int hashCode() {
 
         return Objects.hash(getId(), getDataPedido(), getCliente());
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", itemDoPedidoCollection=" + itemDoPedidoCollection +
+                ", cliente=" + cliente +
+                '}';
     }
 }

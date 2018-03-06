@@ -36,7 +36,7 @@ public class Cliente implements Serializable {
     @Column(name = "sobrenome", length = 50)
     private String sobrenome;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente" , fetch = FetchType.LAZY)
     @JsonBackReference
     private Collection<Pedido> pedidoCollection;
 
@@ -82,7 +82,11 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "org.ufpr.sistemapedidos.model.Cliente[ id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", sobrenome=" + sobrenome + " ]";
+        return "Cliente{" +
+                "id=" + id +
+                ", cpf='" + cpf + '\'' +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                '}';
     }
-
 }
