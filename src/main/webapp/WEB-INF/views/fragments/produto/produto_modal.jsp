@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
 
 <tp:modal_simple>

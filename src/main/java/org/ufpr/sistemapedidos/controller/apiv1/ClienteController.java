@@ -45,10 +45,13 @@ public class ClienteController {
     public ResponseEntity<Cliente> createCliente(@Valid @RequestBody Cliente cliente) {
         try {
             Cliente cliente1 = null;
-            cliente1 = clienteRepository.findOne(cliente.getId());
-            if (cliente1 != null)
-                return new ResponseEntity<>(clienteRepository.save(cliente), OK);
-            return new ResponseEntity<>(clienteRepository.save(cliente), CREATED);
+            if (cliente.getId() != null) cliente1 = clienteRepository.findOne(cliente.getId());
+            else if (cliente.getCpf() != null) cliente1 = clienteRepository.findByCpf(cliente.getCpf());
+            if (cliente1 != null) {
+                return new ResponseEntity<>(cliente1, OK);
+            } else {
+                return new ResponseEntity<>(clienteRepository.save(cliente), CREATED);
+            }
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Cliente) null, CONFLICT);
         }

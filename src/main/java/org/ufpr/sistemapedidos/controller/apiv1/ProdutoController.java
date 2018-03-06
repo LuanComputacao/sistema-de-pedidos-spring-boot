@@ -24,7 +24,7 @@ public class ProdutoController {
 
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Produto> getAllProdutos() {
-        return produtoRepository.findAll();
+        return (List<Produto>) produtoRepository.findAll();
     }
 
     @GetMapping("/{id}")

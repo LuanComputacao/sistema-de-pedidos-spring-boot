@@ -5,7 +5,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.PedidoWrapper;
+import org.ufpr.sistemapedidos.model.Cliente;
 import org.ufpr.sistemapedidos.model.Pedido;
+import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
 
 import javax.validation.Valid;
@@ -19,9 +22,12 @@ public class PedidoController {
     @Autowired
     PedidoRepository pedidoRepository;
 
+    @Autowired
+    ClienteRepository clienteRepository;
+
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Pedido> getAllPedidos() {
-        return pedidoRepository.findAll();
+        return (List<Pedido>) pedidoRepository.findAll();
     }
 
     @GetMapping("/{id}")
@@ -34,22 +40,33 @@ public class PedidoController {
     }
 
 
-//    @GetMapping("/{id}/cliente/{clienteId}")
-//    public ResponseEntity<Pedido> getPedidoById(@PathVariable(value = "clienteId") Integer clienteID, @PathVariable(value = "id") Integer pedidoId) {
-//
-//        Pedido pedido = pedidoRepository.findOne(pedidoId);
-//        if (pedido == null) return ResponseEntity.notFound().build();
-//        return ResponseEntity.ok().body(pedido);
-//    }
+    @GetMapping("/{id}/cliente/{clienteId}")
+    public ResponseEntity<Pedido> getPedidoById(
+            @PathVariable(value = "clienteId") Integer clienteID,
+            @PathVariable(value = "id") Integer pedidoId) {
+
+        Pedido pedido = pedidoRepository.findOne(pedidoId);
+        if (pedido == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(pedido);
+    }
 
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Pedido> createPedido(@Valid @RequestBody Pedido pedido) {
+    public ResponseEntity<Pedido> createPedido(@Valid @RequestBody PedidoWrapper pedidoWrapper) {
         try {
-            Pedido pedido1 = pedidoRepository.findOne(pedido.getId());
-            if (pedido1 != null) {
+            Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+            if (pedido != null) {
                 return new ResponseEntity<>(pedidoRepository.save(pedido), OK);
             }
-            return new ResponseEntity<>(pedidoRepository.save(pedido), CREATED);
+            pedido = new Pedido();
+            Cliente cliente;
+            cliente = clienteRepository.findOne(pedidoWrapper.getClienteID());
+            pedido.setDataPedido(pedidoWrapper.getDataPedido());
+            pedido.setCliente(cliente);
+
+            pedido = pedidoRepository.save(pedido);
+
+            return new ResponseEntity<>(pedido, CREATED);
+
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Pedido) null, CONFLICT);
         }

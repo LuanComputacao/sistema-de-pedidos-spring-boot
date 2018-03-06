@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="func" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
@@ -30,8 +30,7 @@
             <jsp:include page="fragments/pedido/formulario.jsp"/>
         </c:if>
 
-
-        <c:if test="${listar != null}">
+        <c:if test="${listar}">
             <jsp:include page="fragments/pedido/tabela.jsp"/>
         </c:if>
 

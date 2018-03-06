@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,7 +8,7 @@
     <jsp:attribute name="header">
         <th scope="col">#</th>
         <th scope="col">Descrição</th>
-        <th scope="col">  </th>
+        <th scope="col"></th>
     </jsp:attribute>
 
     <jsp:attribute name="content">
