@@ -14,7 +14,8 @@ import java.util.List;
 @Controller
 public class Pedidos {
 
-    private final String view = "pedidos";
+    private final String viewPedidos = "pedidos";
+    private final String viewItens = "itens_do_pedido";
 
     @Autowired
     PedidoRepository pedidoRepository;
@@ -24,7 +25,7 @@ public class Pedidos {
 
     @GetMapping("/pedidos")
     public ModelAndView pedidos() {
-        ModelAndView mv = new ModelAndView(view);
+        ModelAndView mv = new ModelAndView(viewPedidos);
 
         mv.addObject("listar", true);
 
@@ -36,7 +37,7 @@ public class Pedidos {
 
     @GetMapping({"/pedido"})
     public ModelAndView pedido() {
-        ModelAndView mv = new ModelAndView(view);
+        ModelAndView mv = new ModelAndView(viewPedidos);
         mv.addObject("criar", true);
         mv.addObject("clientes", clienteRepository.findAll());
         return mv;
@@ -45,10 +46,19 @@ public class Pedidos {
 
     @GetMapping("/pedido/{id}")
     public ModelAndView pedido(@PathVariable(name = "id") Integer pedidoID) {
-        ModelAndView mv = new ModelAndView(view);
+        ModelAndView mv = new ModelAndView(viewPedidos);
         mv.addObject("editar", true);
         mv.addObject("pedido", pedidoRepository.findOne(pedidoID));
         mv.addObject("clientes", clienteRepository.findAll());
+        return mv;
+    }
+
+
+    @GetMapping("/pedido/{id}/itens")
+    public ModelAndView itensDoPedido(@PathVariable(name = "id") Integer pedidoID) {
+        ModelAndView mv = new ModelAndView(viewItens);
+        Pedido pedido = pedidoRepository.findOne(pedidoID);
+        mv.addObject("pedido", pedido);
         return mv;
     }
 }
