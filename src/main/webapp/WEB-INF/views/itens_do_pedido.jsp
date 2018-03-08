@@ -17,10 +17,10 @@
     <jsp:attribute name="btnToolbar">
         <div class="btn-group mr-2">
             <c:if test="${listar}">
-                <a href="<c:url value="/pedido"/>" class="btn btn-sm btn-outline-primary">Adicionar Item</a>
+                <a href="<c:url value="/pedido/${pedido.id}/item"/>" class="btn btn-sm btn-outline-primary">Adicionar Item</a>
             </c:if>
             <c:if test="${editar || criar}">
-                <a href="<c:url value="/pedidos"/>" class="btn btn-sm btn-outline-primary">Listar Itens do Pedido</a>
+                <a href="<c:url value="/pedido/${pedido.id}/itens"/>" class="btn btn-sm btn-outline-primary">Listar Itens do Pedido</a>
             </c:if>
         </div>
     </jsp:attribute>
@@ -31,6 +31,7 @@
         </c:if>
 
         <c:if test="${listar}">
+            <jsp:include page="fragments/pedido/dados_do_pedido.jsp"/>
             <jsp:include page="fragments/itens_do_pedido/tabela.jsp"/>
         </c:if>
 

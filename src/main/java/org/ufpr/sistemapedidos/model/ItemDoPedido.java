@@ -1,9 +1,11 @@
 package org.ufpr.sistemapedidos.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "item_do_pedido")
@@ -13,22 +15,18 @@ public class ItemDoPedido implements Serializable {
     @EmbeddedId
     protected ItemDoPedidoPK itemDoPedidoPK;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-
     @Length(max = 11)
     @Column(name = "qtdade", length = 11)
     private String qtdade;
 
 
     @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Pedido pedido;
 
     @JoinColumn(name = "id_produto", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonManagedReference
     @ManyToOne(optional = false)
     private Produto produto;
 
@@ -39,14 +37,6 @@ public class ItemDoPedido implements Serializable {
 
     public void setItemDoPedidoPK(ItemDoPedidoPK itemDoPedidoPK) {
         this.itemDoPedidoPK = itemDoPedidoPK;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getQtdade() {
@@ -76,23 +66,26 @@ public class ItemDoPedido implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof ItemDoPedido)) return false;
         ItemDoPedido that = (ItemDoPedido) o;
-
-        if (getItemDoPedidoPK() != null ? !getItemDoPedidoPK().equals(that.getItemDoPedidoPK()) : that.getItemDoPedidoPK() != null)
-            return false;
-        if (!getId().equals(that.getId())) return false;
-        if (getQtdade() != null ? !getQtdade().equals(that.getQtdade()) : that.getQtdade() != null) return false;
-        return getPedido().equals(that.getPedido());
+        return Objects.equals(getItemDoPedidoPK(), that.getItemDoPedidoPK()) &&
+                Objects.equals(getQtdade(), that.getQtdade()) &&
+                Objects.equals(getPedido(), that.getPedido()) &&
+                Objects.equals(getProduto(), that.getProduto());
     }
 
     @Override
     public int hashCode() {
-        int result = getItemDoPedidoPK() != null ? getItemDoPedidoPK().hashCode() : 0;
-        result = 31 * result + getId().hashCode();
-        result = 31 * result + (getQtdade() != null ? getQtdade().hashCode() : 0);
-        result = 31 * result + getPedido().hashCode();
-        return result;
+
+        return Objects.hash(getItemDoPedidoPK(), getQtdade(), getPedido(), getProduto());
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDoPedido{" +
+                "itemDoPedidoPK=" + itemDoPedidoPK +
+                ", qtdade='" + qtdade + '\'' +
+                ", produto=" + produto +
+                '}';
     }
 }

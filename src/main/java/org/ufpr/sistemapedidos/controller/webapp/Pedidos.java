@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.ufpr.sistemapedidos.model.Pedido;
+import org.ufpr.sistemapedidos.model.Produto;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
+import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class Pedidos {
 
     @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    ProdutoRepository produtoRepository;
 
     @GetMapping("/pedidos")
     public ModelAndView pedidos() {
@@ -58,7 +63,20 @@ public class Pedidos {
     public ModelAndView itensDoPedido(@PathVariable(name = "id") Integer pedidoID) {
         ModelAndView mv = new ModelAndView(viewItens);
         Pedido pedido = pedidoRepository.findOne(pedidoID);
+        mv.addObject("listar", true);
         mv.addObject("pedido", pedido);
+        return mv;
+    }
+
+    @GetMapping("/pedido/{id}/item")
+    public ModelAndView addItemDoPedido(@PathVariable(name = "id") Integer pedidoID) {
+        ModelAndView mv = new ModelAndView(viewItens);
+
+        Pedido pedido = pedidoRepository.findOne(pedidoID);
+        List<Produto> produtos = produtoRepository.findAll();
+        mv.addObject("criar", true);
+        mv.addObject("pedido", pedido);
+        mv.addObject("produtos", produtos);
         return mv;
     }
 }
