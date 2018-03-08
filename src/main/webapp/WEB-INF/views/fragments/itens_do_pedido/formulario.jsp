@@ -11,13 +11,10 @@
             <div class="form-group">
                 <label for="pedido-cliente" class="sr-only">Cliente</label>
                 <select id="pedido-cliente" class="form-control" name="pedido-cliente" >
-                    <option> Selecione um Cliente</option>
-                    <c:forEach var="cliente" items="${clientes}">
-                        <option
-                                value="}"
-                                <c:if test="${true}">selected="true"</c:if>
-                        >
-                                ----
+                    <option> Selecione um produto</option>
+                    <c:forEach var="produto" items="${produtos}">
+                        <option value="${produto.id}" <c:if test="${true}">selected="true"</c:if>>
+                            ${produto.descricao}
                         </option>
 
                     </c:forEach>
@@ -25,11 +22,17 @@
             </div>
 
             <div class="form-group">
-                <label for="pedido-data" class="sr-only">Data do Pedido:</label>
-                <input id="pedido-data" class="form-control" type="date" name="dataPedido" placeholder="Descrição"
+                <label for="pedido-data" class="sr-only">Quantidade:</label>
+
+                <input id="pedido-data"
+                       class="form-control"
+                       type="number"
+                       min="1"
+                       value="1"
+                       name="quantidade"
                        <c:if test="${editar}">data-value="${pedido.dataPedido}"</c:if>>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
         </form>
     </div>
 </div>

@@ -1,5 +1,6 @@
 package org.ufpr.sistemapedidos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Produto implements Serializable {
     private String descricao;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
+    @JsonBackReference
     private Collection<ItemDoPedido> itemDoPedidoCollection;
 
     public Integer getId() {
@@ -49,5 +51,13 @@ public class Produto implements Serializable {
 
     public void setItemDoPedidoCollection(Collection<ItemDoPedido> itemDoPedidoCollection) {
         this.itemDoPedidoCollection = itemDoPedidoCollection;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                '}';
     }
 }
