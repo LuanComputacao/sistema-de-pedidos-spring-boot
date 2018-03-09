@@ -2,11 +2,10 @@ package org.ufpr.sistemapedidos.controller.apiv1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ProdutoWraper;
 import org.ufpr.sistemapedidos.model.Produto;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 
@@ -34,14 +33,27 @@ public class ProdutoController {
         return ResponseEntity.ok().body(produto);
     }
 
-    @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Produto> createProduto(@Valid @RequestBody Produto produto) {
+    @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoWraper produtoWraper) {
+
+
+        System.out.println("------------DEBUG-------------");
         try {
-            List<Produto> produtos = null;
-            produtos = produtoRepository.findTop1ByDescription(produto.getDescricao());
+            Produto produto;
+
+            if (produtoWraper.getId() != null) {
+                produto = produtoRepository.getOne(produtoWraper.getId());
+                produto.setDescricao(produtoWraper.getDescricao());
+            } else {
+                produto = produtoRepository.findTop1ByDescription(produtoWraper.getDescricao()).get(0);
+            }
+
             System.out.println(produto);
-            if (!produtos.isEmpty())
-                return new ResponseEntity<>(produtoRepository.save(produtos.get(0)), OK);
+            if (produto != null)
+                return new ResponseEntity<>(produtoRepository.save(produto), OK);
+            else
+                produto = new Produto();
+            produto.setDescricao(produtoWraper.getDescricao());
             return new ResponseEntity<>(produtoRepository.save(produto), CREATED);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Produto) null, CONFLICT);
