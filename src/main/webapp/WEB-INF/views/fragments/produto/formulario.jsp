@@ -13,7 +13,11 @@
 
             <div class="form-group">
                 <label for="produto-descricao" class="sr-only">Descrição:</label>
-                <input class="form-control" type="text" name="descricao" id="produto-descricao" placeholder="Descrição"
+                <input class="form-control"
+                       type="text"
+                       name="descricao"
+                       id="produto-descricao"
+                       placeholder="Descrição"
                        <c:if test="${editar}">data-value="${produto.descricao}"</c:if>>
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>

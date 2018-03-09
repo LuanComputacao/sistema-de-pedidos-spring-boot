@@ -18,6 +18,7 @@
         <div class="btn-group mr-2">
             <c:if test="${listar}">
                 <a href="<c:url value="/pedido/${pedido.id}/item"/>" class="btn btn-sm btn-outline-primary">Adicionar Item</a>
+                <a href="<c:url value="/pedidos"/>" class="btn btn-sm btn-outline-info">Lista de Pedidos</a>
             </c:if>
             <c:if test="${editar || criar}">
                 <a href="<c:url value="/pedido/${pedido.id}/itens"/>" class="btn btn-sm btn-outline-primary">Listar Itens do Pedido</a>
