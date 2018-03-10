@@ -18,7 +18,7 @@
                     <tr>
                         <th scope="row">${produto.id}</th>
                         <td><c:if test="${func:length(produto.descricao) < 1}"> - </c:if>${produto.descricao}</td>
-                        <td>
+                        <td class="text-center">
                             <a href="/produto/${produto.id}"><span data-feather="trash-2"></span></a>
                             <a href="/produto/${produto.id}"><span data-feather="edit"></span></a>
                         </td>

@@ -2,7 +2,7 @@
 <%@taglib prefix="tp" tagdir="/WEB-INF/tags" %>
 
 <tp:modal_simple>
-    <jsp:attribute name="id">pedido-modal</jsp:attribute>
+    <jsp:attribute name="id">item-do-pedido-modal</jsp:attribute>
     <jsp:attribute name="title">
 
     </jsp:attribute>
