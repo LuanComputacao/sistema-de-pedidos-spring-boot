@@ -24,15 +24,17 @@
                     <c:set var="idProduto" value="${pedido.itemDoPedidoCollection[index].itemDoPedidoPK.idProduto}"/>
 
                     <tr>
-                        <th scope="row" class="text-center">PD${idPedido}PT${idProduto}</th>
+                        <th scope="row" class="text-center">
+                            PD${idPedido}PT${idProduto}
+                        </th>
 
                         <td >${pedido.itemDoPedidoCollection[index].produto.descricao}</td>
 
                         <td class="text-center">${pedido.itemDoPedidoCollection[index].qtdade}</td>
 
                         <td class="text-center">
-                            <a href="/pedido/${idPedido}/item/produto/${idProduto}"><span data-feather="trash-2"></span></a>
-                            <a href="/pedido/${idPedido}/item/produto/${idProduto}"><span data-feather="edit"></span></a>
+                            <a href="/pedido/${idPedido}/produto/${idProduto}/item"><span data-feather="trash-2"></span></a>
+                            <a href="/pedido/${idPedido}/produto/${idProduto}/item"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

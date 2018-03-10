@@ -40,16 +40,6 @@ public class PedidoController {
     }
 
 
-    @GetMapping("/{id}/cliente/{clienteId}")
-    public ResponseEntity<Pedido> getPedidoById(
-            @PathVariable(value = "clienteId") Integer clienteID,
-            @PathVariable(value = "id") Integer pedidoId) {
-
-        Pedido pedido = pedidoRepository.findOne(pedidoId);
-        if (pedido == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(pedido);
-    }
-
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Pedido> createPedido(@Valid @RequestBody PedidoWrapper pedidoWrapper) {
         try {
@@ -90,4 +80,6 @@ public class PedidoController {
         Pedido updatedPedido = pedidoRepository.save(pedido);
         return ResponseEntity.ok(updatedPedido);
     }
+
+
 }

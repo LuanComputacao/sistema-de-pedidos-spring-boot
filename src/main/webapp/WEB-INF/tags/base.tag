@@ -14,8 +14,8 @@
 <%@attribute name="footer" fragment="true" %>
 <%@attribute name="btnToolbar" fragment="true" %>
 
-<html>
-<head lang="pt-br">
+<html lang="pt-br">
+<head>
 
     <title>
         <jsp:invoke fragment="title"/>

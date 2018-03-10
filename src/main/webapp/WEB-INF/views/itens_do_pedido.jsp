@@ -40,7 +40,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="jsFooter">
-        <script src="<c:url value="/static/js/itens_do_pedido.js"/>"></script>
+        <script src="<c:url value="/static/js/item_do_pedido.js"/>"></script>
     </jsp:attribute>
 
 </tp:base>

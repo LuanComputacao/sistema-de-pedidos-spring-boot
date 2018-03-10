@@ -13,11 +13,10 @@ public class ItemDoPedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ItemDoPedidoPK itemDoPedidoPK;
+    private ItemDoPedidoPK itemDoPedidoPK;
 
-    @Length(max = 11)
     @Column(name = "qtdade", length = 11)
-    private String qtdade;
+    private Integer qtdade;
 
 
     @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
@@ -39,11 +38,11 @@ public class ItemDoPedido implements Serializable {
         this.itemDoPedidoPK = itemDoPedidoPK;
     }
 
-    public String getQtdade() {
+    public Integer getQtdade() {
         return qtdade;
     }
 
-    public void setQtdade(String qtdade) {
+    public void setQtdade(Integer qtdade) {
         this.qtdade = qtdade;
     }
 
