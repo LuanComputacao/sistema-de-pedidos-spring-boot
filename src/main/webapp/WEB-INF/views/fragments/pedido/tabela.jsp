@@ -17,7 +17,12 @@
             <c:when test="${func:length(pedidos) gt 0}">
                 <c:forEach var="index" begin="0" end="${func:length(pedidos) - 1 }">
                     <tr>
-                        <th scope="row">${pedidos[index].id}</th>
+                        <th scope="row">
+                            <a href="<c:url value="/pedido/${pedidos[index].id}/itens/" />">
+                                <span data-feather="maximize-2"></span>
+                            </a>
+                                ${pedidos[index].id}
+                        </th>
                         <td>${pedidos[index].dataPedido}</td>
                         <td>
                             <c:choose>

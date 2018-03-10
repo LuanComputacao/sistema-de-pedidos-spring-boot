@@ -34,4 +34,12 @@ public class ItemDoPedidoPK implements Serializable{
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
     }
+
+    @Override
+    public String toString() {
+        return "ItemDoPedidoPK{" +
+                "idPedido=" + idPedido +
+                ", idProduto=" + idProduto +
+                '}';
+    }
 }

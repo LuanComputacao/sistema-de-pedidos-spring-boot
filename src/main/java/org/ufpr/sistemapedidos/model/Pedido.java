@@ -1,6 +1,9 @@
 package org.ufpr.sistemapedidos.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -26,9 +29,11 @@ public class Pedido implements Serializable {
     private Date dataPedido;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
+    @JsonBackReference
     private Collection<ItemDoPedido> itemDoPedidoCollection;
 
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id", updatable = false)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id", updatable = false, nullable = false)
+    @JsonManagedReference
     @ManyToOne
     private Cliente cliente;
 
