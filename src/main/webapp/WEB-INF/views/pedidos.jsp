@@ -17,7 +17,7 @@
     <jsp:attribute name="btnToolbar">
         <div class="btn-group mr-2">
             <c:if test="${listar}">
-                <a href="<c:url value="/pedido"/>" class="btn btn-sm btn-outline-primary">Adicionar Pedido</a>
+                <a href="<c:url value="/pedido"/>" class="btn btn-sm btn-outline-primary">Criar Pedido</a>
             </c:if>
             <c:if test="${editar || criar}">
                 <a href="<c:url value="/pedidos"/>" class="btn btn-sm btn-outline-primary">Listar</a>
