@@ -2,6 +2,7 @@ package org.ufpr.sistemapedidos.controller.apiv1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.DomainEvents;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,6 @@ public class ProdutoController {
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoWraper produtoWraper) {
 
-
-        System.out.println("------------DEBUG-------------");
         try {
             Produto produto;
 
@@ -60,6 +59,21 @@ public class ProdutoController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removerProduto(@PathVariable(value = "id") Integer produtoId,
+                                            @Valid @RequestBody ProdutoWraper produtoWraper) {
+        try {
+            Produto produto = null;
+            if (produtoId.equals(produtoWraper.getId())) produto = produtoRepository.findOne(produtoId);
+            if (produto != null && produto.getDescricao().equals(produtoWraper.getDescricao())) {
+                produtoRepository.delete(produto);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> updateProduto(@PathVariable(value = "id") Integer produtoId,
