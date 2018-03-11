@@ -24,7 +24,7 @@ public class ProdutoController {
 
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Produto> getAllProdutos() {
-        return (List<Produto>) produtoRepository.findAll();
+        return produtoRepository.findAll();
     }
 
     @GetMapping("/{id}")
@@ -62,7 +62,7 @@ public class ProdutoController {
     /**
      * Remove um produto
      *
-     * @param produtoId ID do Produto
+     * @param produtoId     ID do Produto
      * @param produtoWraper Representação do Produto em JSON
      * @return ResponseEntity
      */
