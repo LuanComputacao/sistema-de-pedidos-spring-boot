@@ -59,12 +59,21 @@ public class ProdutoController {
         }
     }
 
+    /**
+     * Remove um produto
+     *
+     * @param produtoId ID do Produto
+     * @param produtoWraper Representação do Produto em JSON
+     * @return ResponseEntity
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerProduto(@PathVariable(value = "id") Integer produtoId,
                                             @Valid @RequestBody ProdutoWraper produtoWraper) {
         try {
             Produto produto = null;
-            if (produtoId.equals(produtoWraper.getId())) produto = produtoRepository.findOne(produtoId);
+            if (produtoId.equals(produtoWraper.getId())) {
+                produto = produtoRepository.findOne(produtoId);
+            }
             if (produto != null && produto.getDescricao().equals(produtoWraper.getDescricao())) {
                 produtoRepository.delete(produto);
                 return ResponseEntity.ok().build();
