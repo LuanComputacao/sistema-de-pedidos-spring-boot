@@ -11,6 +11,7 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -62,8 +63,6 @@ public class ClienteController {
         return ResponseEntity.ok().body(cliente);
     }
 
-
-
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable(value = "id") Integer clienteId,
                                                  @Valid @RequestBody Cliente clienteDetails) {
@@ -79,5 +78,22 @@ public class ClienteController {
 
         Cliente updatedCliente = clienteRepository.save(cliente);
         return ResponseEntity.ok(updatedCliente);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Integer clienteId,
+                                        @Valid @RequestBody ClienteWrapper clienteWrapper) {
+        try {
+            Optional<Cliente> cliente = clienteRepository.findById(clienteId);
+            if (cliente.isPresent()) {
+                if (cliente.get().getCpf().equals(clienteWrapper.getCpf())) {
+                    clienteRepository.delete(cliente.get());
+                    return ResponseEntity.ok().build();
+                }
+            }
+            return ResponseEntity.notFound().build();
+        } catch (Exception ignored) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
