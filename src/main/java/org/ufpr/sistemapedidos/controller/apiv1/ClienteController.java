@@ -85,11 +85,9 @@ public class ClienteController {
                                         @Valid @RequestBody ClienteWrapper clienteWrapper) {
         try {
             Optional<Cliente> cliente = clienteRepository.findById(clienteId);
-            if (cliente.isPresent()) {
-                if (cliente.get().getCpf().equals(clienteWrapper.getCpf())) {
-                    clienteRepository.delete(cliente.get());
-                    return ResponseEntity.ok().build();
-                }
+            if (cliente.isPresent() && cliente.get().getCpf().equals(clienteWrapper.getCpf())) {
+                clienteRepository.delete(cliente.get());
+                return ResponseEntity.ok().build();
             }
             return ResponseEntity.notFound().build();
         } catch (Exception ignored) {
