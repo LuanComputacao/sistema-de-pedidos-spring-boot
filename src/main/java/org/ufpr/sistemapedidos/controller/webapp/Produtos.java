@@ -23,7 +23,6 @@ public class Produtos {
         return mv;
     }
 
-
     @GetMapping("/produto")
     public ModelAndView produto() {
         ModelAndView mv = new ModelAndView(view);
