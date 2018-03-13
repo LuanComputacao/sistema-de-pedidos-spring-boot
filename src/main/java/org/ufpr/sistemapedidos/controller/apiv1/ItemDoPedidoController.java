@@ -83,8 +83,8 @@ public class ItemDoPedidoController {
     /**
      * Remove um Item de um Pedido.
      *
-     * @param clienteID ID do Cliente
-     * @param pedidoID ID do Pedido
+     * @param clienteID           ID do Cliente
+     * @param pedidoID            ID do Pedido
      * @param itemDoPedidoWrapper Representação simplificada de Item de Pedido
      * @return Instância de ResponseEntity
      */
@@ -98,7 +98,8 @@ public class ItemDoPedidoController {
         itemDoPedidoPK.setIdPedido(pedidoID);
         itemDoPedidoPK.setIdProduto(itemDoPedidoWrapper.getProdutoId());
         ItemDoPedido itemDoPedido = itemDoPedidoRepository.findOne(itemDoPedidoPK);
-        if (itemDoPedido != null && itemDoPedido.getPedido().getCliente().getId().equals(clienteID)) {
+        if (itemDoPedido != null && itemDoPedido.getPedido()
+                .getCliente().getId().equals(clienteID)) {
             itemDoPedidoRepository.delete(itemDoPedido);
             return ResponseEntity.ok().build();
         }
