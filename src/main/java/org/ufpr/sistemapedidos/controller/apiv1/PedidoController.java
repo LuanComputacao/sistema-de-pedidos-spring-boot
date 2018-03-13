@@ -64,6 +64,28 @@ public class PedidoController {
         }
     }
 
+    /**
+     * Deleta um Pedido.
+     *
+     * @param pedidoWrapper Representação simplificada de um Pedido
+     * @return Instancia de ResponseEntity
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePedido(
+            @PathVariable(value = "id") Integer pedidoId,
+            @Valid @RequestBody PedidoWrapper pedidoWrapper) {
+        Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+
+        if (pedido != null
+                && pedido.getCliente().getId().equals(pedidoWrapper.getClienteID())
+                && pedido.getDataPedido().equals(pedidoWrapper.getDataPedido())) {
+            pedidoRepository.delete(pedido);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Pedido> updatePedido(@PathVariable(value = "id") Integer pedidoId,
                                                @Valid @RequestBody Pedido pedidoDetails) {
