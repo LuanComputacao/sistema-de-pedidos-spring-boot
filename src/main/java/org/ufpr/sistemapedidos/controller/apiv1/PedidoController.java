@@ -12,7 +12,6 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -69,7 +68,7 @@ public class PedidoController {
      * Deleta um Pedido.
      *
      * @param pedidoWrapper Representação simplificada de um Pedido
-     * @return ResponseEntity<T>
+     * @return Instancia de ResponseEntity
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePedido(
