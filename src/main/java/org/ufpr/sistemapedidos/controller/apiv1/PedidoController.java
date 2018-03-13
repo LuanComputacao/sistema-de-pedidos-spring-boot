@@ -12,6 +12,7 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -62,6 +63,27 @@ public class PedidoController {
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Pedido) null, CONFLICT);
         }
+    }
+
+    /**
+     * Deleta um Pedido.
+     *
+     * @param pedidoWrapper Representação simplificada de um Pedido
+     * @return ResponseEntity<T>
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePedido(
+            @PathVariable(value = "id") Integer pedidoId,
+            @Valid @RequestBody PedidoWrapper pedidoWrapper) {
+        Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+
+        if (pedido != null
+                && pedido.getCliente().getId().equals(pedidoWrapper.getClienteID())
+                && pedido.getDataPedido().equals(pedidoWrapper.getDataPedido())) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
