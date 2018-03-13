@@ -80,6 +80,7 @@ public class PedidoController {
         if (pedido != null
                 && pedido.getCliente().getId().equals(pedidoWrapper.getClienteID())
                 && pedido.getDataPedido().equals(pedidoWrapper.getDataPedido())) {
+            pedidoRepository.delete(pedido);
             return ResponseEntity.ok().build();
         }
 
