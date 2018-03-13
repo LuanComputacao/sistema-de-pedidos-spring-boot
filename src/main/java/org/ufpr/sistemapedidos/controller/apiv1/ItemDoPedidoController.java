@@ -79,4 +79,30 @@ public class ItemDoPedidoController {
 
         return ResponseEntity.notFound().build();
     }
+
+    /**
+     * Remove um Item de um Pedido.
+     *
+     * @param clienteID ID do Cliente
+     * @param pedidoID ID do Pedido
+     * @param itemDoPedidoWrapper Representação simplificada de Item de Pedido
+     * @return Instância de ResponseEntity
+     */
+    @DeleteMapping("/itens")
+    public ResponseEntity<?> deleteItemDoPedido(
+            @PathVariable("clienteID") Integer clienteID,
+            @PathVariable("pedidoID") Integer pedidoID,
+            @Valid @RequestBody ItemDoPedidoWrapper itemDoPedidoWrapper) {
+
+        ItemDoPedidoPK itemDoPedidoPK = new ItemDoPedidoPK();
+        itemDoPedidoPK.setIdPedido(pedidoID);
+        itemDoPedidoPK.setIdProduto(itemDoPedidoWrapper.getProdutoId());
+        ItemDoPedido itemDoPedido = itemDoPedidoRepository.findOne(itemDoPedidoPK);
+        if (itemDoPedido != null && itemDoPedido.getPedido().getCliente().getId().equals(clienteID)) {
+            itemDoPedidoRepository.delete(itemDoPedido);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
