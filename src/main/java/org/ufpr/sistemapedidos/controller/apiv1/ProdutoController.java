@@ -60,7 +60,7 @@ public class ProdutoController {
     }
 
     /**
-     * Remove um produto
+     * Remove um produto.
      *
      * @param produtoId     ID do Produto
      * @param produtoWraper Representação do Produto em JSON
