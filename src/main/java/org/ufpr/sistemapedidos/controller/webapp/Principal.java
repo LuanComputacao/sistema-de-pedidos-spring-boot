@@ -11,7 +11,7 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
  * Created by luancomputacao on 24/02/18.
  */
 @Controller
-public class Crud {
+public class Principal {
 
     @GetMapping("/")
     public ModelAndView index() {

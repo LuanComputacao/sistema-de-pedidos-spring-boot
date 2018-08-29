@@ -11,6 +11,7 @@ import org.ufpr.sistemapedidos.model.Produto;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -38,22 +39,37 @@ public class ProdutoController {
     public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoWraper produtoWraper) {
 
         try {
-            Produto produto;
+            Produto produto = new Produto();
+            List<Produto> produtos = new ArrayList<Produto>();
+            boolean criar = false;
+            boolean update = false;
 
-            if (produtoWraper.getId() != null) {
-                produto = produtoRepository.getOne(produtoWraper.getId());
-                produto.setDescricao(produtoWraper.getDescricao());
-            } else {
-                produto = produtoRepository.findTop1ByDescription(produtoWraper.getDescricao()).get(0);
+            if (produtoWraper.getId() != null){
+                produto = produtoRepository.findOne(produtoWraper.getId());
             }
 
-            System.out.println(produto);
-            if (produto != null)
+            if (produtoWraper.getDescricao() != null && !"".equals(produtoWraper.getDescricao())){
+                produtos = produtoRepository.findTop1ByDescription(produtoWraper.getDescricao());
+            }
+
+            if ((produto.getId() != null && produto.getDescricao() != null) || !produtos.isEmpty()) {
+                update = true;
+            } else {
+                criar = true;
+            }
+
+            if (criar) {
+                produto.setDescricao(produtoWraper.getDescricao());
+                return new ResponseEntity<>(produtoRepository.save(produto), CREATED);
+            }
+
+            if (update){
+                if (!produtos.isEmpty()) produto = produtos.get(0);
+                produto.setDescricao(produtoWraper.getDescricao());
                 return new ResponseEntity<>(produtoRepository.save(produto), OK);
-            else
-                produto = new Produto();
-            produto.setDescricao(produtoWraper.getDescricao());
-            return new ResponseEntity<>(produtoRepository.save(produto), CREATED);
+            }
+            return new ResponseEntity<>(produtoRepository.save(produto), BAD_REQUEST);
+
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>((Produto) null, CONFLICT);
         }
