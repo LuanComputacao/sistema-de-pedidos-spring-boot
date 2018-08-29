@@ -31,8 +31,10 @@ public class ClienteController {
     public ResponseEntity<Cliente> createCliente(@Valid @RequestBody ClienteWrapper clienteWrapper) {
         try {
             Cliente cliente1 = null;
-            if (clienteWrapper.getId() != null) cliente1 = clienteRepository.findOne(clienteWrapper.getId());
-            else if (clienteWrapper.getCpf() != null) cliente1 = clienteRepository.findByCpf(clienteWrapper.getCpf());
+            if (clienteWrapper.getId() != null)
+                cliente1 = clienteRepository.findOne(clienteWrapper.getId());
+            else if (clienteWrapper.getCpf() != null)
+                cliente1 = clienteRepository.findByCpf(clienteWrapper.getCpf());
             if (cliente1 != null) {
                 return new ResponseEntity<>(cliente1, OK);
             } else {
@@ -79,7 +81,6 @@ public class ClienteController {
         Cliente updatedCliente = clienteRepository.save(cliente);
         return ResponseEntity.ok(updatedCliente);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Integer clienteId,
                                         @Valid @RequestBody ClienteWrapper clienteWrapper) {

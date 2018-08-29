@@ -17,6 +17,12 @@
 * REST API
 * TomCat jasper
 
+# Como executar a aplição
+`mvn spring-boot:run`
+
+# Como acessar a aplicação
+`localhost:12000`
+
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/10e221673650c314b58c/maintainability)](https://codeclimate.com/github/LuanComputacao/sistema-de-pedidos-spring-boot/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/10e221673650c314b58c/test_coverage)](https://codeclimate.com/github/LuanComputacao/sistema-de-pedidos-spring-boot/test_coverage)
