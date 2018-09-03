@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -33,6 +34,21 @@ public class ItemDoPedidoPK implements Serializable{
 
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemDoPedidoPK that = (ItemDoPedidoPK) o;
+        return getIdPedido() == that.getIdPedido() &&
+                getIdProduto() == that.getIdProduto();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getIdPedido(), getIdProduto());
     }
 
     @Override

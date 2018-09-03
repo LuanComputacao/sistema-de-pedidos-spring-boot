@@ -11,6 +11,7 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
@@ -38,10 +39,7 @@ public class ClienteController {
             if (cliente1 != null) {
                 return new ResponseEntity<>(cliente1, OK);
             } else {
-                cliente1 = new Cliente();
-                cliente1.setCpf(clienteWrapper.getCpf());
-                cliente1.setNome(clienteWrapper.getNome());
-                cliente1.setSobrenome(clienteWrapper.getSobrenome());
+                cliente1 = new Cliente(clienteWrapper.getCpf(), clienteWrapper.getNome(), clienteWrapper.getSobrenome());
                 return new ResponseEntity<>(clienteRepository.save(cliente1), CREATED);
             }
         } catch (DataIntegrityViolationException e) {
@@ -81,14 +79,20 @@ public class ClienteController {
         Cliente updatedCliente = clienteRepository.save(cliente);
         return ResponseEntity.ok(updatedCliente);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Integer clienteId,
-                                        @Valid @RequestBody ClienteWrapper clienteWrapper) {
+
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> deleteNote(@PathVariable(value = "id") Integer clienteId,
+                                             @Valid @RequestBody ClienteWrapper clienteWrapper) {
+        System.out.println(clienteWrapper);
         try {
-            Optional<Cliente> cliente = clienteRepository.findById(clienteId);
-            if (cliente.isPresent() && cliente.get().getCpf().equals(clienteWrapper.getCpf())) {
-                clienteRepository.delete(cliente.get());
-                return ResponseEntity.ok().build();
+            Optional<Cliente> optCliente = clienteRepository.findById(clienteId);
+            Cliente cliente = new Cliente();
+            if (optCliente.isPresent())
+                cliente = optCliente.get();
+
+            if (cliente.getId() != null && cliente.getCpf().equals(clienteWrapper.getCpf())) {
+                clienteRepository.delete(cliente);
+                return ResponseEntity.accepted().build();
             }
             return ResponseEntity.notFound().build();
         } catch (Exception ignored) {

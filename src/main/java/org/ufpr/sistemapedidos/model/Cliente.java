@@ -40,6 +40,14 @@ public class Cliente implements Serializable {
     @JsonBackReference
     private Collection<Pedido> pedidoCollection;
 
+    public Cliente() { }
+
+    public Cliente(String cpf, String nome, String sobrenome) {
+        this.setCpf(cpf);
+        this.setNome(nome);
+        this.setSobrenome(sobrenome);
+    }
+
     public Integer getId() {
         return id;
     }

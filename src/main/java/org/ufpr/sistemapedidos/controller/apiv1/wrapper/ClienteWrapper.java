@@ -37,4 +37,15 @@ public class ClienteWrapper {
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteWraper{" +
+                "id=" + id +
+                ", cpf='" + cpf + '\'' +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                '}';
+    }
 }
+
