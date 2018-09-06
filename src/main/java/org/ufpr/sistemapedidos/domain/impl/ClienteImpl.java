@@ -1,6 +1,6 @@
-package org.ufpr.sistemapedidos.model.impl;
+package org.ufpr.sistemapedidos.domain.impl;
 
-import org.ufpr.sistemapedidos.model.Cliente;
+import org.ufpr.sistemapedidos.domain.Cliente;
 
 public class ClienteImpl extends Cliente {
 

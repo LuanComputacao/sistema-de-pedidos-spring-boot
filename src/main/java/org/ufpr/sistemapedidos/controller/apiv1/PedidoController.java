@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.ufpr.sistemapedidos.controller.apiv1.wrapper.PedidoWrapper;
-import org.ufpr.sistemapedidos.model.Cliente;
-import org.ufpr.sistemapedidos.model.Pedido;
+import org.ufpr.sistemapedidos.domain.Cliente;
+import org.ufpr.sistemapedidos.domain.Pedido;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
 

@@ -3,7 +3,7 @@ package org.ufpr.sistemapedidos.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.ufpr.sistemapedidos.model.Produto;
+import org.ufpr.sistemapedidos.domain.Produto;
 
 import java.util.List;
 
