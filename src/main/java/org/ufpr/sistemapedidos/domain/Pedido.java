@@ -1,4 +1,4 @@
-package org.ufpr.sistemapedidos.model;
+package org.ufpr.sistemapedidos.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ProdutoWraper;
-import org.ufpr.sistemapedidos.model.Produto;
+import org.ufpr.sistemapedidos.domain.Produto;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 
 import javax.validation.Valid;
