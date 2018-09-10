@@ -8,12 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.ufpr.sistemapedidos.domain.ItemDoPedido;
 import org.ufpr.sistemapedidos.domain.ItemDoPedidoPK;
 import org.ufpr.sistemapedidos.domain.Pedido;
-import org.ufpr.sistemapedidos.domain.Produto;
 import org.ufpr.sistemapedidos.services.ItemDoPedidoService;
 import org.ufpr.sistemapedidos.services.PedidoService;
 import org.ufpr.sistemapedidos.services.ProdutoService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller

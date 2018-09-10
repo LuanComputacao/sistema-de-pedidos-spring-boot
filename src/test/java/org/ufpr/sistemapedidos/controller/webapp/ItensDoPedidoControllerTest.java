@@ -1,7 +1,5 @@
 package org.ufpr.sistemapedidos.controller.webapp;
 
-import org.hibernate.boot.spi.InFlightMetadataCollector;
-import org.hibernate.validator.constraints.Mod10Check;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.ufpr.sistemapedidos.services.ProdutoService;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

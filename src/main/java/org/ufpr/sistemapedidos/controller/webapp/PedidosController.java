@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.ufpr.sistemapedidos.domain.Pedido;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
-import org.ufpr.sistemapedidos.repository.PedidoRepository;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 import org.ufpr.sistemapedidos.services.PedidoService;
 
