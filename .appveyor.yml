@@ -1,4 +1,4 @@
-mage: ubuntu
+image: ubuntu
 
 stack:
   - oraclejdk 8
