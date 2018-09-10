@@ -20,6 +20,15 @@ public class ItemDoPedidoPK implements Serializable{
     @Column(name = "id_produto")
     private int idProduto;
 
+    public ItemDoPedidoPK(Integer pedidoId, Integer produtoId) {
+        this.idPedido = pedidoId;
+        this.idProduto = produtoId;
+    }
+
+    public ItemDoPedidoPK() {
+
+    }
+
     public int getIdPedido() {
         return idPedido;
     }

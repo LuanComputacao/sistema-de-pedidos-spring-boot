@@ -5,21 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
-import org.ufpr.sistemapedidos.repository.ClienteRepository;
+import org.ufpr.sistemapedidos.services.ClienteService;
 
 @Controller
-public class Clientes {
+public class ClientesController {
 
     private final String view = "clientes";
 
     @Autowired
-    ClienteRepository clienteRepository;
+    ClienteService clienteService;
 
     @GetMapping("/clientes")
     public ModelAndView clientes() {
         ModelAndView mv = new ModelAndView(view);
         mv.addObject("listar", true);
-        mv.addObject("clientes", clienteRepository.findAll());
+        mv.addObject("clientes", this.clienteService.listarClientes());
         return mv;
     }
 
@@ -34,7 +34,7 @@ public class Clientes {
     public ModelAndView cliente(@PathVariable(name = "id") Integer clienteID) {
         ModelAndView mv = new ModelAndView(view);
         mv.addObject("editar", true);
-        mv.addObject("cliente", clienteRepository.findOne(clienteID));
+        mv.addObject("cliente", this.clienteService.encontrarPorID(clienteID));
         return mv;
     }
 }
