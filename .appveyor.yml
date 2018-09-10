@@ -1,0 +1,15 @@
+mage: ubuntu
+
+stack:
+  - oraclejdk 8
+
+services:
+- mysql
+
+build_script:
+- mvn install
+
+test_script:
+- mvn test
+
+build: on
