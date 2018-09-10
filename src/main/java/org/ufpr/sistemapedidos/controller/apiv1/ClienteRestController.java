@@ -11,14 +11,13 @@ import org.ufpr.sistemapedidos.repository.ClienteRepository;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
-public class ClienteController {
+public class ClienteRestController {
 
     @Autowired
     ClienteRepository clienteRepository;

@@ -4,24 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.ufpr.sistemapedidos.domain.Pedido;
-import org.ufpr.sistemapedidos.domain.Produto;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
+import org.ufpr.sistemapedidos.services.PedidoService;
 
-import javax.jws.WebParam;
 import java.util.List;
 
 @Controller
-public class Pedidos {
+public class PedidosController {
 
     private final String viewPedidos = "pedidos";
 
     @Autowired
-    PedidoRepository pedidoRepository;
+    PedidoService pedidoService;
 
     @Autowired
     ClienteRepository clienteRepository;
@@ -35,7 +33,7 @@ public class Pedidos {
 
         mv.addObject("listar", true);
 
-        List<Pedido> pedidos = pedidoRepository.findAll();
+        List<Pedido> pedidos = pedidoService.listarPedidos();
         mv.addObject("pedidos", pedidos);
 
         return mv;
@@ -54,7 +52,7 @@ public class Pedidos {
     public ModelAndView pedido(@PathVariable(name = "id") Integer pedidoID) {
         ModelAndView mv = new ModelAndView(viewPedidos);
         mv.addObject("editar", true);
-        mv.addObject("pedido", pedidoRepository.findOne(pedidoID));
+        mv.addObject("pedido", pedidoService.encontrarPorId(pedidoID));
         mv.addObject("clientes", clienteRepository.findAll());
         return mv;
     }

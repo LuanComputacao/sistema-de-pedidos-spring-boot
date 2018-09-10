@@ -28,6 +28,14 @@ public class ItemDoPedido implements Serializable {
     @ManyToOne(optional = false)
     private Produto produto;
 
+    public ItemDoPedido(ItemDoPedidoPK itemDoPedidoPK) {
+        this.itemDoPedidoPK = itemDoPedidoPK;
+    }
+
+    public ItemDoPedido() {
+
+    }
+
 
     public ItemDoPedidoPK getItemDoPedidoPK() {
         return itemDoPedidoPK;
