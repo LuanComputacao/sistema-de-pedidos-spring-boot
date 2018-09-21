@@ -10,14 +10,16 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-    private final ProdutoRepository produtoRepository;
-
     @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;
-    }
+    ProdutoRepository produtoRepository;
+
 
     public List<Produto> listarProdutos(){
         return produtoRepository.findAll();
+    }
+
+
+    public List<Produto> listarProdutosNaoIncluidosNoPedido(Integer idPedido){
+        return produtoRepository.findAvailableToInclude(idPedido);
     }
 }

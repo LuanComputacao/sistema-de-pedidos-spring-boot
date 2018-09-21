@@ -37,6 +37,16 @@ public class ItensDoPedidoController {
         return mv;
     }
 
+    @GetMapping("/pedido/{id}/item")
+    public ModelAndView itemDoPedido(@PathVariable(name = "id") Integer pedidoID) {
+        ModelAndView mv = new ModelAndView(viewItens);
+        Pedido pedido = pedidoService.encontrarPorId(pedidoID);
+        mv.addObject("criar", true);
+        mv.addObject("produtos", produtoService.listarProdutosNaoIncluidosNoPedido(pedidoID));
+        mv.addObject("pedido", pedido);
+        return mv;
+    }
+
     @GetMapping("/pedido/{pedidoId}/produto/{produtoId}/item")
     public ModelAndView chooseItemDoPedido(
             @PathVariable(name = "pedidoId") Integer pedidoId,
