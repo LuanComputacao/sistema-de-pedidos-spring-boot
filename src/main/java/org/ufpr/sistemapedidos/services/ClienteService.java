@@ -10,12 +10,9 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private final ClienteRepository clienteRepository;
-
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+    ClienteRepository clienteRepository;
+
 
     public List<Cliente> listarClientes(){
         return clienteRepository.findAll();
