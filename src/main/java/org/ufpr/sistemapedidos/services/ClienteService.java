@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ClienteDTO;
 import org.ufpr.sistemapedidos.domain.Cliente;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
+import org.ufpr.sistemapedidos.utils.CpfUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +17,33 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
+    /**
+     * Avalia se o Nome é válido
+     * <p>
+     * - mais de um caractere válido
+     *
+     * @param nome Nome para avaliação
+     * @return Verdadeiro se válido
+     */
+    Boolean validaNome(String nome) {
+        return nome.length() > 1;
+    }
 
-    public List<Cliente> listarClientes(){
+    /**
+     * Verifica se o CPF é válido ou não
+     *
+     * @param cpf CPF para ser avaliado
+     * @return Verdadeiro se válido
+     */
+    Boolean validaCpf(String cpf) {
+        return CpfUtils.isCPF(cpf);
+    }
+
+    Boolean verificaDados(String cpf, String nome, String sobrenome) {
+        return (cpf.length() == 11 && this.validaNome(nome) && this.validaNome(sobrenome));
+    }
+
+    public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
 
@@ -31,21 +57,40 @@ public class ClienteService {
 
     public Cliente criarCliente(ClienteDTO clienteDTO) {
         Optional<Cliente> clienteFound = clienteRepository.findByCpf(clienteDTO.getCpf());
-        if (clienteDTO.getId() != null || clienteFound.isPresent()) {
+        if (clienteDTO.getId() != null
+                || clienteFound.isPresent()
+                || !this.verificaDados(clienteDTO.getCpf(), clienteDTO.getNome(), clienteDTO.getSobrenome())) {
             return null;
         }
         return clienteRepository.save(new Cliente(clienteDTO.getCpf(), clienteDTO.getNome(), clienteDTO.getSobrenome()));
     }
 
     public Cliente editarCliente(ClienteDTO clienteDTO) {
-        Optional<Cliente> clienteOptional = clienteRepository.findById(clienteDTO.getId());
-        Optional<Cliente> clienteOptional1 = clienteRepository.findByCpf(clienteDTO.getCpf());
-        if (clienteOptional.isPresent() && !clienteOptional1.isPresent()) {
-            Cliente cliente = new Cliente(clienteDTO);
-            cliente.setId(clienteOptional.get().getId());
-            return clienteRepository.save(cliente);
+        Optional<Cliente> clienteParaEditar = clienteRepository.findById(clienteDTO.getId());
+        Optional<Cliente> clienteFound = clienteRepository.findByCpf(clienteDTO.getCpf());
+        Boolean podeSerEditado = false;
+        if (clienteParaEditar.isPresent()
+                && this.verificaDados(clienteDTO.getCpf(), clienteDTO.getNome(), clienteDTO.getSobrenome())) {
+
+            if (clienteFound.isPresent()) {
+                if (clienteParaEditar.get().getCpf().equals(clienteFound.get().getCpf())
+                        && clienteParaEditar.get().getId().equals(clienteFound.get().getId())) {
+
+                    podeSerEditado = true;
+                }
+            } else {
+                podeSerEditado = true;
+            }
         }
-        return null;
+
+        if (podeSerEditado) {
+            Cliente cliente = new Cliente(clienteDTO);
+            cliente.setId(clienteParaEditar.get().getId());
+            Cliente saved = clienteRepository.save(cliente);
+            return saved;
+        } else {
+            return null;
+        }
     }
 
     public Boolean deletaCliente(ClienteDTO clienteDTO) {

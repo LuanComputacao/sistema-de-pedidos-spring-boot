@@ -15,12 +15,19 @@
         <c:choose>
             <c:when test="${func:length(produtos) gt 0}">
                 <c:forEach var="produto" items="${produtos}">
-                    <tr>
+                    <tr id="produto-${produto.id}">
                         <th scope="row">${produto.id}</th>
                         <td><c:if test="${func:length(produto.descricao) < 1}"> - </c:if>${produto.descricao}</td>
                         <td class="text-center">
-                            <a href="/produto/${produto.id}"><span data-feather="trash-2"></span></a>
-                            <a href="/produto/${produto.id}"><span data-feather="edit"></span></a>
+                            <a class="js-btn-delete-produto text-danger"
+                               href="#"
+                               data-produto-id="${produto.id}"
+                               data-produto-descricao="${produto.descricao}"
+                               ><span data-feather="trash-2"></span></a>
+                        </td>
+                        <td class="text-center">
+                            <a class="js-btn-edit-produto text-info"
+                               href="/produto/${produto.id}"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

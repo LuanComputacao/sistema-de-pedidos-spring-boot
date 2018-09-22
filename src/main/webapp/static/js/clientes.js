@@ -43,7 +43,7 @@ Cliente = {
         nome: null,
         sobrenome: null,
         urls: {
-            deleteOne: '/clientes/'
+            deleteOne: '/api/v1/clientes/'
         }
     },
 
@@ -79,6 +79,12 @@ Cliente = {
             var form = Cliente.elements.form;
             form._.submit(function (event) {
                 event.preventDefault();
+                Cliente.methods.fill({
+                    "id": form.id.val(),
+                    "cpf": form.cpf.val(),
+                    "nome": form.nome.val(),
+                    "sobrenome": form.sobrenome.val()
+                });
                 Cliente.methods.save();
                 return false;
             });
@@ -126,6 +132,9 @@ Cliente = {
                     201: function (data) {
                         Cliente.methods.fill(data);
                         Cliente.methods.created();
+                    },
+                    304: function () {
+                        Cliente.methods.notModified()
                     },
                     409: function () {
                         Cliente.methods.conflict()
@@ -177,6 +186,13 @@ Cliente = {
             Cliente.elements.modal._.modal();
         },
 
+        notModified: function () {
+            Cliente.elements.modal.title.text("NÃO MODIFICADO");
+            Cliente.elements.modal.body.text("Os dados estão errados ou o CPF já existe");
+            Cliente.elements.form.cpf.addClass('is-invalid');
+            Cliente.elements.modal._.modal();
+        },
+
         clearForm: function () {
             Cliente.elements.form.id.val('');
             Cliente.elements.form.cpf.val('');
@@ -206,7 +222,7 @@ Cliente = {
                     sobrenome: Cliente.models.sobrenome
                 }),
                 statusCode:{
-                    204: function () {
+                    202: function () {
                         Cliente.methods.deteleted();
                     }
                 }

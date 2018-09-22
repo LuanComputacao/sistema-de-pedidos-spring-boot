@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/api/v1/clientes/{clienteID}/pedidos/{pedidoID}")
-public class ItemDoPedidoController {
+public class ItemDoPedidoRestController {
 
     @Autowired
     PedidoRepository pedidoRepository;
