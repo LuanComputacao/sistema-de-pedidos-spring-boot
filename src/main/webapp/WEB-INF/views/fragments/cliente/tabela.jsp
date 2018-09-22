@@ -16,14 +16,20 @@
         <c:choose>
             <c:when test="${func:length(clientes) gt 0}">
                 <c:forEach var="cliente" items="${clientes}">
-                    <tr>
+                    <tr id="cliente-${cliente.id}">
                         <th scope="row">${cliente.id}</th>
                         <td><c:if test="${func:length(cliente.cpf) < 1}"> - </c:if>${cliente.cpf}</td>
                         <td><c:if test="${func:length(cliente.nome) < 1}"> - </c:if>${cliente.nome}</td>
                         <td><c:if test="${func:length(cliente.sobrenome) < 1}"> - </c:if>${cliente.sobrenome}</td>
                         <td>
-                            <a href="/cliente/${cliente.id}"><span data-feather="trash-2"></span></a>
-                            <a href="/cliente/${cliente.id}"><span data-feather="edit"></span></a>
+                            <a class="float-left js-btn-delete-cliente text-danger" href="#"
+                                data-cliente-id="${cliente.id}"
+                                data-cliente-cpf="${cliente.cpf}"
+                                data-cliente-nome="${cliente.nome}"
+                                data-cliente-sobrenome="${cliente.sobrenome}">
+                                <span data-feather="trash-2"></span>
+                            </a>
+                            <a class="float-right js-btn-edit-cliente text-info" href="/cliente/${cliente.id}"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

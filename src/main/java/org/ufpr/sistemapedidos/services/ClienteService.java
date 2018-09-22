@@ -39,7 +39,8 @@ public class ClienteService {
 
     public Cliente editarCliente(ClienteDTO clienteDTO) {
         Optional<Cliente> clienteOptional = clienteRepository.findById(clienteDTO.getId());
-        if (clienteOptional.isPresent()) {
+        Optional<Cliente> clienteOptional1 = clienteRepository.findByCpf(clienteDTO.getCpf());
+        if (clienteOptional.isPresent() && !clienteOptional1.isPresent()) {
             Cliente cliente = new Cliente(clienteDTO);
             cliente.setId(clienteOptional.get().getId());
             return clienteRepository.save(cliente);
@@ -49,8 +50,7 @@ public class ClienteService {
 
     public Boolean deletaCliente(ClienteDTO clienteDTO) {
         Optional<Cliente> clienteOptional = clienteRepository.findByCpfAndId(clienteDTO.getId(), clienteDTO.getCpf());
-        clienteRepository.delete(clienteOptional.orElse(null));
-
+        clienteOptional.ifPresent(cliente -> clienteRepository.delete(cliente));
         return !clienteRepository.findByCpfAndId(clienteDTO.getId(), clienteDTO.getCpf()).isPresent();
     }
 }
