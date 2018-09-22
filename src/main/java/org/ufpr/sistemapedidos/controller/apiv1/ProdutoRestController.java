@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ProdutoDTO;
 import org.ufpr.sistemapedidos.domain.Produto;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
+import org.ufpr.sistemapedidos.services.ProdutoService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -18,13 +19,16 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/produtos")
-public class ProdutoController {
+public class ProdutoRestController {
     @Autowired
     ProdutoRepository produtoRepository;
 
+    @Autowired
+    ProdutoService produtoService;
+
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Produto> getAllProdutos() {
-        return produtoRepository.findAll();
+        return produtoService.listarProdutos();
     }
 
     @GetMapping("/{id}")
@@ -85,17 +89,11 @@ public class ProdutoController {
     public ResponseEntity<?> removerProduto(@PathVariable(value = "id") Integer produtoId,
                                             @Valid @RequestBody ProdutoDTO produtoDTO) {
         try {
-            Produto produto = null;
-            if (produtoId.equals(produtoDTO.getId())) {
-                produto = produtoRepository.findOne(produtoId);
-            }
-            if (produto != null && produto.getDescricao().equals(produtoDTO.getDescricao())) {
-                produtoRepository.delete(produto);
-                return ResponseEntity.ok().build();
-            }
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            Boolean clienteFoiDeletado = produtoService.deletaProduto(produtoDTO);
+            if (clienteFoiDeletado) return ResponseEntity.status(ACCEPTED).build();
+            else return ResponseEntity.status(NOT_FOUND).build();
+        } catch (Exception ignored) {
+            return ResponseEntity.status(BAD_REQUEST).build();
         }
     }
 

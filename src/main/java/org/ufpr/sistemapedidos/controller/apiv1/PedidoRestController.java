@@ -10,6 +10,7 @@ import org.ufpr.sistemapedidos.domain.Cliente;
 import org.ufpr.sistemapedidos.domain.Pedido;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
 import org.ufpr.sistemapedidos.repository.PedidoRepository;
+import org.ufpr.sistemapedidos.services.PedidoService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,12 +19,15 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
-public class PedidoController {
+public class PedidoRestController {
     @Autowired
     PedidoRepository pedidoRepository;
 
     @Autowired
     ClienteRepository clienteRepository;
+
+    @Autowired
+    PedidoService pedidoService;
 
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Pedido> getAllPedidos() {
@@ -73,16 +77,13 @@ public class PedidoController {
     public ResponseEntity<?> deletePedido(
             @PathVariable(value = "id") Integer pedidoId,
             @Valid @RequestBody PedidoDTO pedidoDTO) {
-        Pedido pedido = pedidoRepository.findOne(pedidoDTO.getId());
-
-        if (pedido != null
-                && pedido.getCliente().getId().equals(pedidoDTO.getClienteID())
-                && pedido.getDataPedido().equals(pedidoDTO.getDataPedido())) {
-            pedidoRepository.delete(pedido);
-            return ResponseEntity.ok().build();
+        try {
+            Boolean clienteFoiDeletado = pedidoService.deletaPedido(pedidoDTO);
+            if (clienteFoiDeletado) return ResponseEntity.status(ACCEPTED).build();
+            else return ResponseEntity.status(NOT_FOUND).build();
+        } catch (Exception ignored) {
+            return ResponseEntity.status(BAD_REQUEST).build();
         }
-
-        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")

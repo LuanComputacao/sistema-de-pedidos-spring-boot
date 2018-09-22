@@ -26,13 +26,21 @@ Produto = {
             title: $('#produto-modal').find('.js-modal-title'),
             body: $('#produto-modal').find('.js-modal-body')
 
-        }
+        },
+        buttons: {
+            deleteProduto: $(".js-btn-delete-produto"),
+            editProduto: $(".js-btn-edit-produto")
+        },
     },
 
     models: {
         id: null,
         descricao: null,
+        urls:{
+            deleteOne: "/api/v1/produtos/"
+        }
     },
+
 
     run: function () {
         console.log("Produto started");
@@ -40,6 +48,7 @@ Produto = {
 
         console.log("Calling watchers");
         this.watchers.form();
+        this.watchers.table();
 
         console.log(this.models);
     },
@@ -63,6 +72,13 @@ Produto = {
 
             form.descricao.keyup(function (e) {
                 Produto.models.descricao = form.descricao.val();
+            });
+        },
+        table: function () {
+            $(Produto.elements.buttons.deleteProduto).on('click', function (e) {
+                e.preventDefault();
+                Produto.methods.deleteOne(this);
+                return false;
             });
         }
     },
@@ -145,6 +161,39 @@ Produto = {
             Produto.elements.modal.body.html("<p>O End Point " + data.responseJSON.path + " não foi encontrado</p>")
             Produto.elements.modal._.modal();
 
+        },
+
+        deleteOne: function (clickedBtn) {
+            console.log(clickedBtn);
+            Produto.methods.fill({
+                "id": $(clickedBtn).data("produto-id"),
+                "descricao": $(clickedBtn).data("produto-descricao"),
+            });
+
+
+            $.ajax({
+                url: Produto.models.urls.deleteOne.concat(Produto.models.id),
+                method: "DELETE",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    id: Produto.models.id,
+                    cpf: Produto.models.descricao,
+                }),
+                statusCode:{
+                    202: function () {
+                        Produto.methods.deteleted();
+                    }
+                }
+            })
+        },
+
+        deteleted: function () {
+            Produto.methods.fillComponent();
+            Produto.elements.modal.title.text("DELETADO COM SUCESSO");
+            Produto.elements.modal.body.html(Produto.component);
+            Produto.elements.modal._.modal();
+            $('#produto-' + Produto.models.id).hide()
         }
     }
 };

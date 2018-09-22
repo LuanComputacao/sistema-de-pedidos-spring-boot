@@ -10,15 +10,18 @@
         <th scope="col">Data</th>
         <th scope="col">Cliente</th>
         <th scope="col"></th>
+        <td></td>
+        <td></td>
     </jsp:attribute>
 
     <jsp:attribute name="content">
         <c:choose>
             <c:when test="${func:length(pedidos) gt 0}">
                 <c:forEach var="index" begin="0" end="${func:length(pedidos) - 1 }">
-                    <tr>
+                    <tr id="pedido-${pedidos[index].id}">
                         <th scope="row">
-                            <a href="<c:url value="/pedido/${pedidos[index].id}/itens/" />"><span data-feather="maximize-2"></span></a>
+                            <a href="<c:url value="/pedido/${pedidos[index].id}/itens/" />">
+                                <span data-feather="maximize-2"></span></a>
                                 ${pedidos[index].id}
                         </th>
                         <td>${pedidos[index].dataPedido}</td>
@@ -35,8 +38,14 @@
 
 
                         <td class="text-center">
-                            <a href="/pedido/${pedidos[index].id}"><span data-feather="trash-2"></span></a>
-                            <a href="/pedido/${pedidos[index].id}"><span data-feather="edit"></span></a>
+                            <a class="js-btn-delete-pedido text-danger"
+                               data-pedido-id="${pedidos[index].id}"
+                               data-pedido-cliente-id="${pedidos[index].cliente.id}"
+                               href="/pedido/${pedidos[index].id}"><span data-feather="trash-2"></span></a>
+                        </td>
+                        <td class="text-center">
+                            <a class="js-btn-edit-pedido text-info"
+                               href="/pedido/${pedidos[index].id}"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -6,20 +6,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
+import org.ufpr.sistemapedidos.services.ProdutoService;
 
 @Controller
-public class Produtos {
+public class ProdutosController {
 
     private final String view = "produtos";
 
     @Autowired
-    ProdutoRepository produtoRepository;
+    ProdutoService produtoService;
 
     @GetMapping("/produtos")
     public ModelAndView produtos() {
         ModelAndView mv = new ModelAndView(view);
         mv.addObject("listar", true);
-        mv.addObject("produtos", produtoRepository.findAll());
+        mv.addObject("produtos", produtoService.listarProdutos());
         return mv;
     }
 
@@ -34,7 +35,7 @@ public class Produtos {
     public ModelAndView prudot(@PathVariable(name = "id") Integer produtoID) {
         ModelAndView mv = new ModelAndView(view);
         mv.addObject("editar", true);
-        mv.addObject("produto", produtoRepository.findOne(produtoID));
+        mv.addObject("produto", produtoService.encontrarPorID(produtoID));
         return mv;
     }
 }

@@ -1,6 +1,7 @@
 package org.ufpr.sistemapedidos.controller.apiv1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,7 @@ import org.ufpr.sistemapedidos.services.ClienteService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
@@ -36,7 +36,7 @@ public class ClienteRestController {
         try {
             Cliente cliente = clienteService.criarCliente(clienteDTO);
             if (cliente != null) return new ResponseEntity<>(cliente, CREATED);
-            return new ResponseEntity<>(null, CONFLICT);
+            return ResponseEntity.status(NOT_MODIFIED).build();
         } catch (Exception ignored) {
             return ResponseEntity.badRequest().build();
         }
@@ -68,17 +68,15 @@ public class ClienteRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable(value = "id") Integer clienteId,
+    public ResponseEntity<?> updateCliente(@PathVariable(value = "id") Integer clienteId,
                                                  @Valid @RequestBody ClienteDTO clienteDTO) {
 
         try {
-            if (!clienteId.equals(clienteDTO.getId())) return ResponseEntity.noContent().build();
-
+            if (!clienteId.equals(clienteDTO.getId())) return ResponseEntity.status(BAD_REQUEST).build();
             Cliente cliente = clienteService.editarCliente(clienteDTO);
 
-            if (cliente == null) ResponseEntity.noContent().build();
-
-            return ResponseEntity.ok(cliente);
+            if (cliente == null) return ResponseEntity.status(NOT_FOUND).build();
+            else return ResponseEntity.status(OK).body(cliente);
         } catch (Exception ignored) {
             return ResponseEntity.badRequest().build();
         }
@@ -87,12 +85,10 @@ public class ClienteRestController {
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> deleteNote(@PathVariable(value = "id") Integer clienteId,
                                              @Valid @RequestBody ClienteDTO clienteDTO) {
-
         try {
             Boolean clienteFoiDeletado = clienteService.deletaCliente(clienteDTO);
             if (clienteFoiDeletado) return ResponseEntity.accepted().build();
             else return ResponseEntity.notFound().build();
-
         } catch (Exception ignored) {
             return ResponseEntity.badRequest().build();
         }

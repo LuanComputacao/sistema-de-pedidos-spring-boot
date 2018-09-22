@@ -10,6 +10,8 @@
         <th scope="col">CPF</th>
         <th scope="col">Nome</th>
         <th scope="col">Sobrenome</th>
+        <th></th>
+        <th></th>
     </jsp:attribute>
 
     <jsp:attribute name="content">
@@ -21,15 +23,19 @@
                         <td><c:if test="${func:length(cliente.cpf) < 1}"> - </c:if>${cliente.cpf}</td>
                         <td><c:if test="${func:length(cliente.nome) < 1}"> - </c:if>${cliente.nome}</td>
                         <td><c:if test="${func:length(cliente.sobrenome) < 1}"> - </c:if>${cliente.sobrenome}</td>
-                        <td>
-                            <a class="float-left js-btn-delete-cliente text-danger" href="#"
+                        <td class="text-center">
+                            <a class="js-btn-delete-cliente text-danger"
+                               href="#"
                                 data-cliente-id="${cliente.id}"
                                 data-cliente-cpf="${cliente.cpf}"
                                 data-cliente-nome="${cliente.nome}"
                                 data-cliente-sobrenome="${cliente.sobrenome}">
                                 <span data-feather="trash-2"></span>
                             </a>
-                            <a class="float-right js-btn-edit-cliente text-info" href="/cliente/${cliente.id}"><span data-feather="edit"></span></a>
+                        </td>
+                        <td class="text-center">
+                            <a class="js-btn-edit-cliente text-info"
+                               href="/cliente/${cliente.id}"><span data-feather="edit"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

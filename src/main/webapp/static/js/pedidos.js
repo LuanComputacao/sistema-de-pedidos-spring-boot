@@ -28,13 +28,20 @@ Pedido = {
             title: $('#pedido-modal').find('.js-modal-title'),
             body: $('#pedido-modal').find('.js-modal-body')
 
-        }
+        },
+        buttons: {
+            deletePedido: $(".js-btn-delete-pedido"),
+            editPedido: $(".js-btn-edit-pedido")
+        },
     },
 
     models: {
         id: null,
         cliente: {id: null, cfp: null, nome: null, sobrenome: null},
-        dataPedido: null
+        dataPedido: null,
+        urls:{
+            deleteOne: "/api/v1/produtos/"
+        }
     },
 
     run: function () {
@@ -43,6 +50,7 @@ Pedido = {
 
         console.log("Calling watchers");
         this.watchers.form();
+        this.watchers.table();
 
         console.log(this.models);
     },
@@ -71,6 +79,14 @@ Pedido = {
             });
             form.dataPedido.on("change", function (e) {
                 Pedido.models.dataPedido = form.dataPedido.val();
+            });
+        },
+
+        table: function () {
+            $(Pedido.elements.buttons.deletePedido).on('click', function (e) {
+                e.preventDefault();
+                Pedido.methods.deleteOne(this);
+                return false;
             });
         }
     },
@@ -158,6 +174,39 @@ Pedido = {
             Pedido.elements.modal.body.html("<p>O End Point " + data.responseJSON.path + " não foi encontrado</p>")
             Pedido.elements.modal._.modal();
 
+        },
+
+        deleteOne: function (clickedBtn) {
+            console.log(clickedBtn);
+            Pedido.methods.fill({
+                "id": $(clickedBtn).data("pedido-id"),
+                "cliente": {id: $(clickedBtn).data("pedido-cliente-id"), cfp: null, nome: null, sobrenome: null},
+            });
+
+            $.ajax({
+                url: Pedido.models.urls.deleteOne.concat(Pedido.models.id),
+                method: "DELETE",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    id: Pedido.models.id,
+                    dataPedido: "",
+                    clienteID: Pedido.models.cliente.id,
+                }),
+                statusCode:{
+                    202: function () {
+                        Pedido.methods.deteleted();
+                    }
+                }
+            })
+        },
+
+        deteleted: function () {
+            Pedido.methods.fillComponent();
+            Pedido.elements.modal.title.text("DELETADO COM SUCESSO");
+            Pedido.elements.modal.body.html(Pedido.component);
+            Pedido.elements.modal._.modal();
+            $('#pedido-' + Pedido.models.id).hide()
         }
     }
 };
