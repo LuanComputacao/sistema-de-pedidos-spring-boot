@@ -1,6 +1,6 @@
 package org.ufpr.sistemapedidos.controller.apiv1.wrapper;
 
-public class ItemDoPedidoWrapper {
+public class ItemDoPedidoDTO {
     private Integer produtoId;
     private Integer qtdade;
 
@@ -22,7 +22,7 @@ public class ItemDoPedidoWrapper {
 
     @Override
     public String toString() {
-        return "ItemDoPedidoWrapper{" +
+        return "ItemDoPedidoDTO{" +
                 "produtoId=" + produtoId +
                 ", qtdade=" + qtdade +
                 '}';

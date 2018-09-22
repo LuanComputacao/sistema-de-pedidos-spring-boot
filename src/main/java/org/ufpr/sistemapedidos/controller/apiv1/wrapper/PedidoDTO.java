@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PedidoWrapper {
+public class PedidoDTO {
     private Integer id;
     private Date dataPedido;
     private Integer clienteID;
@@ -36,7 +36,7 @@ public class PedidoWrapper {
 
     @Override
     public String toString() {
-        return "PedidoWrapper{" +
+        return "PedidoDTO{" +
                 "id=" + id +
                 ", dataPedido=" + dataPedido +
                 ", clienteID=" + clienteID +

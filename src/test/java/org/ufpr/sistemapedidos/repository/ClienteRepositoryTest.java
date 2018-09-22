@@ -11,6 +11,7 @@ import org.ufpr.sistemapedidos.domain.Cliente;
 import org.ufpr.sistemapedidos.domain.impl.ClienteImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -32,10 +33,10 @@ public class ClienteRepositoryTest {
         testEntityManager.flush();
 
         // when
-        Cliente found = clienteRepository.findByCpf(cliente.getCpf());
+        Cliente found = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
 
         // then
-        assertEquals(found.getCpf(), cliente.getCpf());
+        assertTrue(cliente.equals(found));
 
     }
 }

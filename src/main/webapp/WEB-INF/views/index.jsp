@@ -3,11 +3,11 @@
 
 
 <tp:base>
-    <jsp:attribute name="title">Sistema de Pedidos</jsp:attribute>
+    <jsp:attribute name="title">Mr. Xavier - Banco de Questões</jsp:attribute>
     <jsp:attribute name="subtitle">Bem vindo</jsp:attribute>
 
     <jsp:attribute name="body">
-        Clique no menu lateral para acessar as listagens
+        Utilize o menu lateral para navegar entre as categorias
     </jsp:attribute>
 </tp:base>
 

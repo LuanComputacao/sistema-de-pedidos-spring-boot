@@ -51,12 +51,13 @@ Cliente = {
     },
 
     init: function () {
+        // Load the values if the form was filled by the system, or browser on load
         this.models.id = this.elements.form.id.val() || this.elements.form.id.data('value') || null;
         this.models.cpf = this.elements.form.cpf.val() || this.elements.form.cpf.data('value');
         this.models.nome = this.elements.form.nome.val() || this.elements.form.nome.data('value');
         this.models.sobrenome = this.elements.form.sobrenome.val() || this.elements.form.sobrenome.data('value');
 
-
+        // Refill the form
         this.elements.form.id.val(this.models.id);
         this.elements.form.cpf.val(this.models.cpf);
         this.elements.form.nome.val(this.models.nome);
@@ -69,6 +70,7 @@ Cliente = {
             form._.submit(function (event) {
                 event.preventDefault();
                 Cliente.methods.save();
+                return false;
             });
 
             form.cpf.keyup(function (e) {
@@ -85,9 +87,12 @@ Cliente = {
 
     methods: {
         save: function () {
+            var estaEditando = $.isNumeric(Cliente.models.id);
+            var method = (estaEditando) ? "PUT" : "POST";
+            var ajaxUrl = Cliente.elements.form._.attr('action');
             $.ajax({
-                url: Cliente.elements.form._.attr('action'),
-                method: "POST",
+                url: estaEditando ? ajaxUrl.concat(Cliente.models.id) : ajaxUrl,
+                method: method,
                 contentType: "application/json",
                 dataType: "json",
                 data: JSON.stringify({
@@ -119,7 +124,7 @@ Cliente = {
             Cliente.models.sobrenome = dataCliente.sobrenome;
         },
 
-        fillComponent: function(){
+        fillComponent: function () {
             var component = Cliente.component;
             component.find('.js-cliente-id').text(Cliente.models.id);
             component.find('.js-cliente-cpf').text(Cliente.models.cpf);

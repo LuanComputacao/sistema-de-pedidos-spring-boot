@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ItemDoPedidoWrapper;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ItemDoPedidoDTO;
 import org.ufpr.sistemapedidos.domain.ItemDoPedido;
 import org.ufpr.sistemapedidos.domain.ItemDoPedidoPK;
 import org.ufpr.sistemapedidos.domain.Pedido;
@@ -47,10 +47,10 @@ public class ItemDoPedidoController {
     public ResponseEntity<ItemDoPedido> addItemDoPedido(
             @PathVariable("clienteID") Integer clienteID,
             @PathVariable("pedidoID") Integer pedidoID,
-            @Valid @RequestBody ItemDoPedidoWrapper itemDoPedidoWrapper) {
+            @Valid @RequestBody ItemDoPedidoDTO itemDoPedidoDTO) {
 
         Pedido pedido = pedidoRepository.findOne(pedidoID);
-        Produto produto = produtoRepository.findOne(itemDoPedidoWrapper.getProdutoId());
+        Produto produto = produtoRepository.findOne(itemDoPedidoDTO.getProdutoId());
 
         ItemDoPedidoPK itemDoPedidoPK = new ItemDoPedidoPK();
         ItemDoPedido itemDoPedido = new ItemDoPedido();
@@ -62,14 +62,14 @@ public class ItemDoPedidoController {
 
             if (foundItemDoPedido.isPresent()) {
                 itemDoPedido.setItemDoPedidoPK(foundItemDoPedido.get().getItemDoPedidoPK());
-                itemDoPedido.setQtdade(itemDoPedidoWrapper.getQtdade());
+                itemDoPedido.setQtdade(itemDoPedidoDTO.getQtdade());
                 itemDoPedido.setPedido(pedido);
                 itemDoPedido.setProduto(produto);
                 itemDoPedidoRepository.save(itemDoPedido);
                 return new ResponseEntity<>(itemDoPedidoRepository.getOne(itemDoPedido.getItemDoPedidoPK()), OK);
             } else {
                 itemDoPedido.setItemDoPedidoPK(itemDoPedidoPK);
-                itemDoPedido.setQtdade(itemDoPedidoWrapper.getQtdade());
+                itemDoPedido.setQtdade(itemDoPedidoDTO.getQtdade());
                 itemDoPedido.setPedido(pedido);
                 itemDoPedido.setProduto(produto);
                 itemDoPedido = itemDoPedidoRepository.save(itemDoPedido);
@@ -85,18 +85,18 @@ public class ItemDoPedidoController {
      *
      * @param clienteID           ID do Cliente
      * @param pedidoID            ID do Pedido
-     * @param itemDoPedidoWrapper Representação simplificada de Item de Pedido
+     * @param itemDoPedidoDTO Representação simplificada de Item de Pedido
      * @return Instância de ResponseEntity
      */
     @DeleteMapping("/itens")
     public ResponseEntity<?> deleteItemDoPedido(
             @PathVariable("clienteID") Integer clienteID,
             @PathVariable("pedidoID") Integer pedidoID,
-            @Valid @RequestBody ItemDoPedidoWrapper itemDoPedidoWrapper) {
+            @Valid @RequestBody ItemDoPedidoDTO itemDoPedidoDTO) {
 
         ItemDoPedidoPK itemDoPedidoPK = new ItemDoPedidoPK();
         itemDoPedidoPK.setIdPedido(pedidoID);
-        itemDoPedidoPK.setIdProduto(itemDoPedidoWrapper.getProdutoId());
+        itemDoPedidoPK.setIdProduto(itemDoPedidoDTO.getProdutoId());
         ItemDoPedido itemDoPedido = itemDoPedidoRepository.findOne(itemDoPedidoPK);
         if (itemDoPedido != null && itemDoPedido.getPedido()
                 .getCliente().getId().equals(clienteID)) {

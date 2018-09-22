@@ -89,7 +89,7 @@
 
 <script src="<c:url value="/webjars/popper.js"/>"></script>
 <script src="<c:url value="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"/>"></script>
-<script src="<c:url value="/static/node_modules/feather-icons/dist/feather.min.js"/>"></script>
+<script src="<c:url value="/webjars/feather-icons/4.7.3/dist/feather.min.js"/>"></script>
 
 <jsp:invoke fragment="jsFooter"/>
 </body>
