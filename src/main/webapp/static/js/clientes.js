@@ -8,14 +8,14 @@ $(function () {
 
 Cliente = {
 
-    component: $("<div class='js-cliente'></div>").html('\
-    \<div>\
-    \   <b>ID</b>: <span class="js-cliente-id"></span><br> \
-    \   <b>CPF</b>: <span class="js-cliente-cpf"></span><br> \
-    \   <b>Nome</b>: <span class="js-cliente-nome"></span><br> \
-    \   <b>Sobrenome</b>: <span class="js-cliente-sobrenome"></span>\
-    \</div> \
-    '),
+    component: $("<div class='js-cliente'></div>").html(''
+        .concat('<div>')
+        .concat('   <b>ID</b>: <span class="js-cliente-id"></span><br> ')
+        .concat('   <b>CPF</b>: <span class="js-cliente-cpf"></span><br> ')
+        .concat('   <b>Nome</b>: <span class="js-cliente-nome"></span><br> ')
+        .concat('   <b>Sobrenome</b>: <span class="js-cliente-sobrenome"></span>')
+        .concat('</div> ')
+    ),
 
     elements: {
         form: {
@@ -30,14 +30,21 @@ Cliente = {
             title: $('#cliente-modal').find('.js-modal-title'),
             body: $('#cliente-modal').find('.js-modal-body')
 
-        }
+        },
+        buttons: {
+            deleteCliente: $(".js-btn-delete-cliente"),
+            editCliente: $(".js-btn-edit-cliente"),
+        },
     },
 
     models: {
         id: null,
         cpf: null,
         nome: null,
-        sobrenome: null
+        sobrenome: null,
+        urls: {
+            deleteOne: '/clientes/'
+        }
     },
 
     run: function () {
@@ -45,7 +52,10 @@ Cliente = {
         this.init();
 
         console.log("Calling watchers");
+        console.log("-- form");
         this.watchers.form();
+        console.log("-- table");
+        this.watchers.table();
 
         console.log(this.models);
     },
@@ -81,6 +91,13 @@ Cliente = {
             });
             form.sobrenome.keyup(function (e) {
                 Cliente.models.sobrenome = form.sobrenome.val();
+            });
+        },
+        table: function () {
+            $(Cliente.elements.buttons.deleteCliente).on('click', function (e) {
+                e.preventDefault();
+                Cliente.methods.deleteOne(this);
+                return false;
             });
         }
     },
@@ -165,6 +182,43 @@ Cliente = {
             Cliente.elements.form.cpf.val('');
             Cliente.elements.form.nome.val('');
             Cliente.elements.form.sobrenome.val('');
+        },
+
+        deleteOne: function (clickedBtn) {
+            console.log(clickedBtn);
+            Cliente.methods.fill({
+                "id": $(clickedBtn).data("cliente-id"),
+                "cpf": $(clickedBtn).data("cliente-cpf"),
+                "nome": $(clickedBtn).data("cliente-nome"),
+                "sobrenome": $(clickedBtn).data("cliente-sobrenome")
+            });
+
+
+            $.ajax({
+                url: Cliente.models.urls.deleteOne.concat(Cliente.models.id),
+                method: "DELETE",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    id: Cliente.models.id,
+                    cpf: Cliente.models.cpf,
+                    nome: Cliente.models.nome,
+                    sobrenome: Cliente.models.sobrenome
+                }),
+                statusCode:{
+                    204: function () {
+                        Cliente.methods.deteleted();
+                    }
+                }
+            })
+        },
+
+        deteleted: function () {
+            Cliente.methods.fillComponent();
+            Cliente.elements.modal.title.text("DELETADO COM SUCESSO");
+            Cliente.elements.modal.body.html(Cliente.component);
+            Cliente.elements.modal._.modal();
+            $('#cliente-' + Cliente.models.id).hide()
         }
     }
 };

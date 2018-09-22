@@ -13,11 +13,9 @@ public class ProdutoService {
     @Autowired
     ProdutoRepository produtoRepository;
 
-
     public List<Produto> listarProdutos(){
         return produtoRepository.findAll();
     }
-
 
     public List<Produto> listarProdutosNaoIncluidosNoPedido(Integer idPedido){
         return produtoRepository.findAvailableToInclude(idPedido);

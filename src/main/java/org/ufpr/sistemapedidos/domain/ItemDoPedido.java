@@ -17,7 +17,6 @@ public class ItemDoPedido implements Serializable {
     @Column(name = "qtdade", length = 11)
     private Integer qtdade;
 
-
     @JoinColumn(name = "id_pedido", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +34,6 @@ public class ItemDoPedido implements Serializable {
     public ItemDoPedido() {
 
     }
-
 
     public ItemDoPedidoPK getItemDoPedidoPK() {
         return itemDoPedidoPK;
