@@ -11,6 +11,4 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
     @Query("SELECT c FROM Pedido c WHERE c.id = ?1")
     Pedido findOne(Integer pedidoID);
 
-
-
 }

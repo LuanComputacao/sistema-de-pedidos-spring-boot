@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ufpr.sistemapedidos.controller.apiv1.wrapper.PedidoWrapper;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.PedidoDTO;
 import org.ufpr.sistemapedidos.domain.Cliente;
 import org.ufpr.sistemapedidos.domain.Pedido;
 import org.ufpr.sistemapedidos.repository.ClienteRepository;
@@ -41,18 +41,17 @@ public class PedidoController {
 
 
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Pedido> createPedido(@Valid @RequestBody PedidoWrapper pedidoWrapper) {
+    public ResponseEntity<Pedido> createPedido(@Valid @RequestBody PedidoDTO pedidoDTO) {
         try {
-            Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+            Pedido pedido = pedidoRepository.findOne(pedidoDTO.getId());
 
             if (pedido != null) {
                 return new ResponseEntity<>(pedidoRepository.save(pedido), OK);
             }
 
             pedido = new Pedido();
-            Cliente cliente;
-            cliente = clienteRepository.findOne(pedidoWrapper.getClienteID());
-            pedido.setDataPedido(pedidoWrapper.getDataPedido());
+            Cliente cliente = clienteRepository.findOne(pedidoDTO.getClienteID()).orElse(null);
+            pedido.setDataPedido(pedidoDTO.getDataPedido());
             pedido.setCliente(cliente);
 
             pedido = pedidoRepository.save(pedido);
@@ -67,18 +66,18 @@ public class PedidoController {
     /**
      * Deleta um Pedido.
      *
-     * @param pedidoWrapper Representação simplificada de um Pedido
+     * @param pedidoDTO Representação simplificada de um Pedido
      * @return Instancia de ResponseEntity
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePedido(
             @PathVariable(value = "id") Integer pedidoId,
-            @Valid @RequestBody PedidoWrapper pedidoWrapper) {
-        Pedido pedido = pedidoRepository.findOne(pedidoWrapper.getId());
+            @Valid @RequestBody PedidoDTO pedidoDTO) {
+        Pedido pedido = pedidoRepository.findOne(pedidoDTO.getId());
 
         if (pedido != null
-                && pedido.getCliente().getId().equals(pedidoWrapper.getClienteID())
-                && pedido.getDataPedido().equals(pedidoWrapper.getDataPedido())) {
+                && pedido.getCliente().getId().equals(pedidoDTO.getClienteID())
+                && pedido.getDataPedido().equals(pedidoDTO.getDataPedido())) {
             pedidoRepository.delete(pedido);
             return ResponseEntity.ok().build();
         }

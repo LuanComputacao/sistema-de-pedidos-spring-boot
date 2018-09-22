@@ -1,6 +1,6 @@
 package org.ufpr.sistemapedidos.controller.apiv1.wrapper;
 
-public class ClienteWrapper {
+public class ClienteDTO {
     private Integer id;
     private String cpf;
     private String nome;
@@ -40,7 +40,7 @@ public class ClienteWrapper {
 
     @Override
     public String toString() {
-        return "ClienteWraper{" +
+        return " ClienteDTO{" +
                 "id=" + id +
                 ", cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +

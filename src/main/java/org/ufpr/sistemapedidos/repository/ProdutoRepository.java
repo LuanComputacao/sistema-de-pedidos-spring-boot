@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    @Query("SELECT c FROM Produto c WHERE c.id = ?1")
+    @Query("SELECT p FROM Produto p WHERE p.id = ?1")
     Produto findOne(Integer produtoId);
 
-    @Query("SELECT c FROM Produto c WHERE c.descricao LIKE ?1 ORDER BY c.id DESC")
+    @Query("SELECT p FROM Produto p WHERE p.descricao LIKE ?1 ORDER BY p.id DESC")
     List<Produto> findTop1ByDescription(String descricao);
 
-    @Query("SELECT c FROM Produto c WHERE c.id NOT IN(SELECT c.itemDoPedidoCollection. FROM  d WHERE d.id_pedido = ?1)")
+    @Query("SELECT p FROM Produto p WHERE p.id NOT IN (SELECT ip.itemDoPedidoPK.idProduto FROM  ItemDoPedido ip WHERE ip.itemDoPedidoPK.idPedido = ?1)")
     List<Produto> findAvailableToInclude(Integer idPedido);
 
 }

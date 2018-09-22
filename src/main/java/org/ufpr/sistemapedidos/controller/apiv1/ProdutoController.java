@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ProdutoWraper;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ProdutoDTO;
 import org.ufpr.sistemapedidos.domain.Produto;
 import org.ufpr.sistemapedidos.repository.ProdutoRepository;
 
@@ -35,7 +35,7 @@ public class ProdutoController {
     }
 
     @PostMapping(path = "/", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoWraper produtoWraper) {
+    public ResponseEntity<Produto> createProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
 
         try {
             Produto produto = new Produto();
@@ -43,12 +43,12 @@ public class ProdutoController {
             boolean criar = false;
             boolean update = false;
 
-            if (produtoWraper.getId() != null){
-                produto = produtoRepository.findOne(produtoWraper.getId());
+            if (produtoDTO.getId() != null){
+                produto = produtoRepository.findOne(produtoDTO.getId());
             }
 
-            if (produtoWraper.getDescricao() != null && !"".equals(produtoWraper.getDescricao())){
-                produtos = produtoRepository.findTop1ByDescription(produtoWraper.getDescricao());
+            if (produtoDTO.getDescricao() != null && !"".equals(produtoDTO.getDescricao())){
+                produtos = produtoRepository.findTop1ByDescription(produtoDTO.getDescricao());
             }
 
             if ((produto.getId() != null && produto.getDescricao() != null) || !produtos.isEmpty()) {
@@ -58,13 +58,13 @@ public class ProdutoController {
             }
 
             if (criar) {
-                produto.setDescricao(produtoWraper.getDescricao());
+                produto.setDescricao(produtoDTO.getDescricao());
                 return new ResponseEntity<>(produtoRepository.save(produto), CREATED);
             }
 
             if (update){
                 if (!produtos.isEmpty()) produto = produtos.get(0);
-                produto.setDescricao(produtoWraper.getDescricao());
+                produto.setDescricao(produtoDTO.getDescricao());
                 return new ResponseEntity<>(produtoRepository.save(produto), OK);
             }
             return new ResponseEntity<>(produtoRepository.save(produto), BAD_REQUEST);
@@ -78,18 +78,18 @@ public class ProdutoController {
      * Remove um produto.
      *
      * @param produtoId     ID do Produto
-     * @param produtoWraper Representação do Produto em JSON
+     * @param produtoDTO Representação do Produto em JSON
      * @return ResponseEntity
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removerProduto(@PathVariable(value = "id") Integer produtoId,
-                                            @Valid @RequestBody ProdutoWraper produtoWraper) {
+                                            @Valid @RequestBody ProdutoDTO produtoDTO) {
         try {
             Produto produto = null;
-            if (produtoId.equals(produtoWraper.getId())) {
+            if (produtoId.equals(produtoDTO.getId())) {
                 produto = produtoRepository.findOne(produtoId);
             }
-            if (produto != null && produto.getDescricao().equals(produtoWraper.getDescricao())) {
+            if (produto != null && produto.getDescricao().equals(produtoDTO.getDescricao())) {
                 produtoRepository.delete(produto);
                 return ResponseEntity.ok().build();
             }

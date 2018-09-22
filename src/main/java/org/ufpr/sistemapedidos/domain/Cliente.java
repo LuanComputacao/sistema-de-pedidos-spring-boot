@@ -4,6 +4,7 @@ package org.ufpr.sistemapedidos.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.ufpr.sistemapedidos.controller.apiv1.wrapper.ClienteDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -46,6 +47,12 @@ public class Cliente implements Serializable {
         this.setCpf(cpf);
         this.setNome(nome);
         this.setSobrenome(sobrenome);
+    }
+
+    public Cliente(ClienteDTO clienteDTO) {
+        this.setCpf(clienteDTO.getCpf());
+        this.setNome(clienteDTO.getNome());
+        this.setSobrenome(clienteDTO.getSobrenome());
     }
 
     public Integer getId() {

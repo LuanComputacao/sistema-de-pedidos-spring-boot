@@ -3,7 +3,7 @@ package org.ufpr.sistemapedidos.controller.apiv1.wrapper;
 /**
  *
  */
-public class ProdutoWraper {
+public class ProdutoDTO {
     private Integer id;
     private String descricao;
 
@@ -25,7 +25,7 @@ public class ProdutoWraper {
 
     @Override
     public String toString() {
-        return "ProdutoWrapper{" +
+        return "ProdutoDTO{" +
                 "id=" + id +
                 ", descricao=" + descricao +
                 '}';
