@@ -40,8 +40,13 @@
                         <td class="text-center">
                             <a class="js-btn-delete-pedido text-danger"
                                data-pedido-id="${pedidos[index].id}"
+                               data-pedido-data="${pedidos[index].dataPedido}"
                                data-pedido-cliente-id="${pedidos[index].cliente.id}"
-                               href="/pedido/${pedidos[index].id}"><span data-feather="trash-2"></span></a>
+                               data-pedido-cliente-cpf="${pedidos[index].cliente.cpf}"
+                               data-pedido-cliente-nome="${pedidos[index].cliente.nome}"
+                               data-pedido-cliente-sobrenome="${pedidos[index].cliente.sobrenome}"
+
+                               href="#"><span data-feather="trash-2"></span></a>
                         </td>
                         <td class="text-center">
                             <a class="js-btn-edit-pedido text-info"
@@ -52,7 +57,7 @@
             </c:when>
             <c:otherwise>
                 <th scope="row"> - #</th>
-                <td> -</td>
+                <td> - </td>
             </c:otherwise>
         </c:choose>
     </jsp:attribute>

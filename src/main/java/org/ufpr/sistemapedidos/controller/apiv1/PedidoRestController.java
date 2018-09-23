@@ -79,7 +79,7 @@ public class PedidoRestController {
             @Valid @RequestBody PedidoDTO pedidoDTO) {
         try {
             Boolean clienteFoiDeletado = pedidoService.deletaPedido(pedidoDTO);
-            if (clienteFoiDeletado) return ResponseEntity.status(ACCEPTED).build();
+            if (clienteFoiDeletado) return ResponseEntity.status(ACCEPTED).body(pedidoDTO);
             else return ResponseEntity.status(NOT_FOUND).build();
         } catch (Exception ignored) {
             return ResponseEntity.status(BAD_REQUEST).build();
