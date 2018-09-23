@@ -8,13 +8,13 @@ $(function () {
 
 Pedido = {
 
-    component: $("<div class='js-pedido'></div>").html('\
-    \<div>\
-    \   <b>ID</b>: <span class="js-pedido-id"></span><br> \
-    \   <b>Cliente</b>: [<span class="js-pedido-cliente-cpf"></span>] - <span class="js-pedido-cliente-nome"></span><br> \
-    \   <b>Data</b>: <span class="js-pedido-data"></span><br> \
-    \</div> \
-    '),
+    component: $("<div class='js-pedido'></div>").html(''
+        .concat(' <div>')
+        .concat('    <b>ID</b>: <span class="js-pedido-id"></span><br> ')
+        .concat('    <b>Cliente</b>: [<span class="js-pedido-cliente-cpf"></span>] - <span class="js-pedido-cliente-nome"></span><br> ')
+        .concat('    <b>Data</b>: <span class="js-pedido-data"></span><br> ')
+        .concat(' </div> ')
+    ),
 
     elements: {
         form: {
@@ -39,8 +39,8 @@ Pedido = {
         id: null,
         cliente: {id: null, cfp: null, nome: null, sobrenome: null},
         dataPedido: null,
-        urls:{
-            deleteOne: "/api/v1/produtos/"
+        urls: {
+            deleteOne: "/api/v1/pedidos/"
         }
     },
 
@@ -171,7 +171,7 @@ Pedido = {
         web404: function (data) {
             console.log(data);
             Pedido.elements.modal.title.text("404: Not Found");
-            Pedido.elements.modal.body.html("<p>O End Point " + data.responseJSON.path + " não foi encontrado</p>")
+            Pedido.elements.modal.body.html("<p>O End Point " + data.responseJSON.path + " não foi encontrado</p>");
             Pedido.elements.modal._.modal();
 
         },
@@ -180,7 +180,13 @@ Pedido = {
             console.log(clickedBtn);
             Pedido.methods.fill({
                 "id": $(clickedBtn).data("pedido-id"),
-                "cliente": {id: $(clickedBtn).data("pedido-cliente-id"), cfp: null, nome: null, sobrenome: null},
+                "cliente": {
+                    id: $(clickedBtn).data("pedido-cliente-id"),
+                    cfp: $(clickedBtn).data("pedido-cliente-cpf"),
+                    nome: $(clickedBtn).data("pedido-cliente-nome"),
+                    sobrenome: $(clickedBtn).data("pedido-cliente-sobrenome")
+                },
+                "dataPedido": $(clickedBtn).data("pedido-data")
             });
 
             $.ajax({
@@ -190,10 +196,10 @@ Pedido = {
                 dataType: "json",
                 data: JSON.stringify({
                     id: Pedido.models.id,
-                    dataPedido: "",
-                    clienteID: Pedido.models.cliente.id,
+                    dataPedido: Pedido.models.dataPedido,
+                    clienteID: Pedido.models.cliente.id
                 }),
-                statusCode:{
+                statusCode: {
                     202: function () {
                         Pedido.methods.deteleted();
                     }

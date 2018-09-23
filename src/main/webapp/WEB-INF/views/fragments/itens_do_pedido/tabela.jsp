@@ -28,13 +28,20 @@
                             PD${idPedido}PT${idProduto}
                         </th>
 
-                        <td >${pedido.itemDoPedidoCollection[index].produto.descricao}</td>
+                        <td>${pedido.itemDoPedidoCollection[index].produto.descricao}</td>
 
                         <td class="text-center">${pedido.itemDoPedidoCollection[index].qtdade}</td>
 
                         <td class="text-center">
-                            <a href="/pedido/${idPedido}/produto/${idProduto}/item"><span data-feather="trash-2"></span></a>
-                            <a href="/pedido/${idPedido}/produto/${idProduto}/item"><span data-feather="edit"></span></a>
+                            <a class="js-btn-delete-pedido text-danger"
+                               href="#">
+                                <span data-feather="trash-2"></span>
+                            </a>
+                        <td class="text-center">
+                            <a class="js-btn-edit-pedido text-info"
+                               href="/pedido/${idPedido}/produto/${idProduto}/item">
+                                <span data-feather="edit"></span>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>

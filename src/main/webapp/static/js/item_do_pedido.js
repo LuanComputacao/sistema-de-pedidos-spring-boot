@@ -8,14 +8,14 @@ $(function () {
 
 ItemDoPedido = {
 
-    component: $("<div class='js-pedido'></div>").html('\
-    \<div>\
-    \   <b>ID</b>:      <span class="js-item-do-pedido-id"></span><br> \
-    \   <b>Cliente</b>: <span class="js-item-do-pedido-cliente"></span><br> \
-    \   <b>Pedido</b>:    <span class="js-item-do-pedido-pedido"></span><br> \
-    \   <b>Quantidade</b>:    <span class="js-item-do-pedido-quantidade"></span><br> \
-    \</div> \
-    '),
+    component: $("<div class='js-pedido'></div>").html(''
+        .concat('<div>')
+        .concat('   <b>ID</b>:      <span class="js-item-do-pedido-id"></span><br> ')
+        .concat('   <b>Cliente</b>: <span class="js-item-do-pedido-cliente"></span><br> ')
+        .concat('   <b>Pedido</b>:    <span class="js-item-do-pedido-pedido"></span><br> ')
+        .concat('   <b>Quantidade</b>:    <span class="js-item-do-pedido-quantidade"></span><br> ')
+        .concat('</div> ')
+    ),
 
     elements: {
         form: {

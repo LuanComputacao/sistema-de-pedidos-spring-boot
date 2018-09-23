@@ -25,7 +25,10 @@ public class PedidoService {
 
     public Boolean deletaPedido(PedidoDTO pedidoDTO) {
         Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoDTO.getId());
-        pedidoOptional.ifPresent(pedido -> pedidoRepository.delete(pedido));
+        pedidoOptional.ifPresent(pedido -> {
+            if (pedido.getItemDoPedidoCollection().isEmpty())
+                pedidoRepository.delete(pedido);
+        });
         return !pedidoRepository.findById(pedidoDTO.getId()).isPresent();
     }
 }
