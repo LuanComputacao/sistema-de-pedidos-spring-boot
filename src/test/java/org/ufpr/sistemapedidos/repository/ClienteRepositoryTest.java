@@ -26,7 +26,7 @@ public class ClienteRepositoryTest {
     @Test
     public void whenFindByCpf_thenReturnCliente() {
         // given
-        Cliente cliente = ClienteImpl.createCliente("00000000001", "Fist", "Last");
+        Cliente cliente = ClienteImpl.createCliente("00000000011", "Fist", "Last");
 
 
         testEntityManager.persist(cliente);
@@ -36,7 +36,7 @@ public class ClienteRepositoryTest {
         Cliente found = clienteRepository.findByCpf(cliente.getCpf()).orElse(null);
 
         // then
-        assertTrue(cliente.equals(found));
+        assertEquals(cliente, found);
 
     }
 }

@@ -32,13 +32,12 @@ Content-Type: application/json
 
 ###
 
-DELETE /api/v1/clientes/6
+DELETE /api/v1/clientes/3
 Host: {{host}}
 Cache-Control: no-cache
 Accept: application/json;charset=UTF-8
 Content-Type: application/json
 
-{"id": "3", "cpf": "00000001000", "nome": "Luan Roger", "sobrenome": "Santos Santana" }
-
+{"id": 3, "cpf": "00000000010", "nome": "Luan Roger", "sobrenome": "Santos Santana"}
 ###
 

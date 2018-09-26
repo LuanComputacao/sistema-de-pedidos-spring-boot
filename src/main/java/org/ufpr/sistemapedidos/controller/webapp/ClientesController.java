@@ -12,13 +12,8 @@ public class ClientesController {
 
     private final String view = "clientes";
 
-    final
-    ClienteService clienteService;
-
     @Autowired
-    public ClientesController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
+    ClienteService clienteService;
 
     @GetMapping("/clientes")
     public ModelAndView clientes() {
