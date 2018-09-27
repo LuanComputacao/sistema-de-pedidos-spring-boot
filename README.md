@@ -1,29 +1,26 @@
 # sistema de pedidos
 
-# Frameworks
-
-* BackEnd
-  * spring-boot
-* FrontEnd
-  * bootstrap
-
-# Tecnologias
-
-* Hibernate
+## Linguagens
+* Java
 * JavaScript
-  * JQuery 
-* JSP
-  * jstl
-* REST API
-* TomCat jasper
+* HTML-JSP
+* CSS
+* SQL
 
-# Como executar a aplição
+## Frameworks
+* JAVA: [spring-boot](https://spring.io/)
+* FrontEnd: bootstrap
+
+## Como executar a aplição
 `mvn spring-boot:run`
 
-# Como acessar a aplicação
-`localhost:12000`
+## Como executar os testes da aplição
+`mvn test`
 
+## Como acessar a aplicação
+`localhost:8181`
 
+## Tags
 [![Maintainability](https://api.codeclimate.com/v1/badges/10e221673650c314b58c/maintainability)](https://codeclimate.com/github/LuanComputacao/sistema-de-pedidos-spring-boot/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/10e221673650c314b58c/test_coverage)](https://codeclimate.com/github/LuanComputacao/sistema-de-pedidos-spring-boot/test_coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fd4cf8b8f3a143b697612778f780d369)](https://app.codacy.com/app/LuanComputacao/sistema-de-pedidos-spring-boot?utm_source=github.com&utm_medium=referral&utm_content=LuanComputacao/sistema-de-pedidos-spring-boot&utm_campaign=badger)
@@ -36,3 +33,39 @@
 
 
 [![Build Status](https://travis-ci.org/LuanComputacao/sistema-de-pedidos-spring-boot.svg?branch=master)](https://travis-ci.org/LuanComputacao/sistema-de-pedidos-spring-boot)
+
+## Detalhes
+
+### Dados iniciais do DB 
+`./src/main/resources/data.sql`
+
+### Views directory
+`./src/main/webapp/WEB-INF/views`
+
+### Routes
+
+```
+  /
+ └── clientes/
+ └── cliente/
+ |   └── {id}/
+ └── produtos/
+ └── produto/
+ |   └── {id}/
+ └── pedido/
+ |   └── /{id}/
+ |       └── itens/
+ |       └── item/
+ |       └── produto/{id}/item/
+ └──api/
+    └── v1
+        └── clientes/
+        |   └── {id}
+        |   |   └── pedidos
+        |   |       └── {pedidosID}
+        |   └── {cpf}
+        └── pedidos/
+        |   └── {id}
+        └── produtos/
+            └── {id}
+```
