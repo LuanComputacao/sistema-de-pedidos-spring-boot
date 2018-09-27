@@ -37,10 +37,10 @@
 ## Detalhes
 
 ### Dados iniciais do DB 
-`./src/main/resources/data.sql`
+[`./src/main/resources/data.sql`](https://github.com/LuanComputacao/sistema-de-pedidos-spring-boot/blob/master/src/main/resources/data.sql)
 
 ### Views directory
-`./src/main/webapp/WEB-INF/views`
+[`./src/main/webapp/WEB-INF/views`](https://github.com/LuanComputacao/sistema-de-pedidos-spring-boot/tree/master/src/main/webapp/WEB-INF/views)
 
 ### Routes
 
